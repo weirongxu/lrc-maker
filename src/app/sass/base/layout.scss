@@ -1,0 +1,13 @@
+%row {
+  &::after {
+    content: ' ';
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: 540px) {
+    @content
+  }
+}

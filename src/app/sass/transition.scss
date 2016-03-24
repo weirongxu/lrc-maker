@@ -1,0 +1,35 @@
+.expand-y-transition {
+  transition: all .3s ease;
+  transform: scaleY(1);
+}
+
+.expand-y-enter,
+.expand-y-leave,
+{
+  transform: scaleY(0);
+}
+
+.expand-x-transition {
+  transition: all .3s ease;
+  transform: scaleX(1);
+}
+
+.expand-x-enter,
+.expand-x-leave,
+{
+  transform: scaleX(0);
+}
+
+.modal-transition {
+  .modal {
+    @extend .expand-y-transition;
+  }
+}
+
+.modal-enter,
+.modal-leave,
+{
+  .modal {
+    @extend .expand-y-transition;
+  }
+}
