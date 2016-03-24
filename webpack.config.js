@@ -1,4 +1,4 @@
-// var isProduction = process.env.NODE_ENV === 'production'
+var isProduction = process.env.NODE_ENV === 'production'
 var path = require('path')
 
 module.exports = {
@@ -7,7 +7,7 @@ module.exports = {
   output: {
     filename: 'main.js',
     path: './build/assets/',
-    publicPath: '/assets/'
+    publicPath: isProduction ? './assets/' : '/assets/',
   },
   module: {
     preLoaders: [
