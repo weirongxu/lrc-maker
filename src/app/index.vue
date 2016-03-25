@@ -317,7 +317,7 @@ export default {
       this.initLyric()
     },
     saveLyric() {
-      saveLrc(this.runner.lrc.toString(), 'lrc')
+      saveLrc(this.runner.lrc.toString(), this.runner.lrc.info.ti || 'lyric')
     },
     lyricsUpdate() {
       cache.set('lyric-string', this.runner.lrc.toString())
