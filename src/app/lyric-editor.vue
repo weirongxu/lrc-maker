@@ -99,7 +99,7 @@ ul.lyrics {
   margin: 0;
   padding: 0;
   > li {
-    // min-height: 30px;
+    min-height: 40px;
     text-align: center;
     color: #BBB;
     padding: 10px 0;
@@ -126,7 +126,8 @@ ul.lyrics {
     &.division {
       display: block;
       width: 100%;
-      padding: 4px 0;
+      min-height: auto;
+      padding: 2px 0;
       font-size: 12px;
       text-align: center;
     }

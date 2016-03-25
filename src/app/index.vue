@@ -246,8 +246,6 @@ export default {
   data() {
     var lyricString = cache.get('lyric-string', '')
     var lrc = Lrc.parse(lyricString)
-    lrc.info.re = `${PKG.name} (${PKG.homepage})`
-    lrc.info.ve = PKG.version
 
     return {
       musicUrl: cache.get('music', ''),
@@ -287,11 +285,20 @@ export default {
     }
   },
   methods: {
+    initLyric() {
+      this.runner.lrc.info.re = `${PKG.name} (${PKG.homepage})`
+      this.runner.lrc.info.ve = PKG.version
+      if (this.$refs.player.duration)
+        this.runner.lrc.info.length = timeFilter(this.$refs.player.duration)
+      if (this.userName)
+        this.runner.lrc.info.by = this.userName
+    },
     uploadLyric(lyric) {
       this.lyricString = lyric
     },
     parseLyric() {
       this.runner = new Runner(Lrc.parse(this.lyricString))
+      this.initLyric()
     },
     uploadLyricText(lyricText) {
       this.textLyricString = lyricText
@@ -307,6 +314,7 @@ export default {
       this.lyricString = ''
       this.textLyrics = []
       this.runner = new Runner()
+      this.initLyric()
     },
     saveLyric() {
       saveLrc(this.runner.lrc.toString(), 'lrc')
@@ -323,6 +331,9 @@ export default {
     durationchange(duration) {
       this.runner.lrc.info.length = timeFilter(duration)
     },
+  },
+  ready() {
+    this.initLyric()
   },
   watch: {
     editing(val) {

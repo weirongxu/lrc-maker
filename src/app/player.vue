@@ -159,6 +159,7 @@ export default {
     globalKeydown
     .on('space', () => {
       this.paused = !this.paused
+      return false
     })
     .on('arrowleft', (event) => {
       if (event.ctrlKey) {

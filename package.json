@@ -1,6 +1,6 @@
 {
   "name": "lrc-maker",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "lrc maker",
   "main": "index.js",
   "scripts": {
@@ -50,7 +50,7 @@
     "clone": "^1.0.2",
     "eventemitter2": "^1.0.0",
     "filesaver.js": "^0.2.0",
-    "lrc-kit": "^0.0.4",
+    "lrc-kit": "^0.1.1",
     "unidragger": "^2.1.0"
   }
 }
