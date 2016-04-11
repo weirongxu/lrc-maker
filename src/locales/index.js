@@ -1,5 +1,4 @@
 var locales = {}
-// var req = require.context('./')
 
 ;[
   'en',
