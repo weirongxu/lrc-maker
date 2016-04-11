@@ -3,31 +3,31 @@
     <div class="left">
       <menu class="btn">
         <div slot="target">
-          <i class="icon-upload"></i> upload
+          <i class="icon-upload"></i> {{ $t('upload') }}
         </div>
         <ul slot="list">
           <li @click="lyricModal=true">
-            <i class="icon-upload"></i> lyric
+            <i class="icon-upload"></i> {{ $t('lrc') }}
           </li>
           <li @click="lyricTextModal=true">
-            <i class="icon-upload"></i> lyric text
+            <i class="icon-upload"></i> {{ $t('lyric')}}
           </li>
           <li>
-            <upload accept="audio/*" read-format="DataURL" @uploaded="uploadMusic">music</upload>
+            <upload accept="audio/*" read-format="DataURL" @uploaded="uploadMusic">{{ $t('music')}}</upload>
           </li>
         </ul>
       </menu>
       <div class="btn" @click="saveModal=true">
-        <i class="icon-save"></i> save
+        <i class="icon-save"></i> {{ $t('save')}}
       </div>
     </div>
     <div class="right">
       <div class="btn" @click="editing=!editing">
         <template v-if="editing">
-          <i class="icon-cancel"></i> close edit
+          <i class="icon-cancel"></i> {{ $t('close_edit') }}
         </template>
         <template v-else>
-          <i class="icon-edit"></i> open edit
+          <i class="icon-edit"></i>  {{ $t('open_edit') }}
         </template>
       </div>
       <div class="btn" @click="helpModal=true">
@@ -36,72 +36,85 @@
     </div>
   </header>
 
-  <player :src="musicUrl" @timeupdate="timeupdate" @durationchange="durationchange" v-ref:player></player>
+  <player
+    :src="musicUrl"
+    @timeupdate="timeupdate"
+    @durationchange="durationchange"
+    v-ref:player>
+  </player>
 
-  <lyric-editor :editing="editing" :runner="runner" :text-lyrics.sync="textLyrics" @update="lyricsUpdate" :playto="playto" v-ref:lyric>lyric editor</lyric-editor>
+  <lyric-editor
+    :editing="editing"
+    :runner="runner"
+    :text-lyrics.sync="textLyrics"
+    @update="lyricsUpdate"
+    :playto="playto"
+    v-ref:lyric>
+    lyric editor
+  </lyric-editor>
 
   <footer>
     <div class="left">
       <div class="btn" v-if="editing" @click="lyricInfoModal=true">
-        <i class="icon-info"></i> info
+        <i class="icon-info"></i> {{ $t('lrc_info') }}
       </div>
       <div class="btn" @click="clearLyric">
-        <i class="icon-trash"></i> lyric
+        <i class="icon-trash"></i> {{ $t('lyric') }}
       </div>
     </div>
     <div class="right" v-if="editing">
-      <div class="btn" title="[UP]" @click="$refs.lyric.$emit('prevlyric')">prev lyric</div>
-      <div class="btn" title="[DOWN]" @click="$refs.lyric.$emit('nextlyric')">next lyric</div>
+      <div class="btn" title="[UP]" @click="$refs.lyric.$emit('prevlyric')">{{ $t('prev_lyric') }}</div>
+      <div class="btn" title="[DOWN]" @click="$refs.lyric.$emit('nextlyric')">{{ $t('next_lyric') }}</div>
     </div>
   </footer>
 
-  <modal title="Lyric Save" :show.sync="saveModal">
+  <modal :title="$t('title.lyric_save')" :show.sync="saveModal">
     <div slot="body">
       <textarea>{{runner.lrc.toString()}}</textarea>
       <div class="btn" @click="saveLyric">
-        <i class="icon-download"></i> lyric
+        <i class="icon-download"></i> {{ $t('lyric') }}
       </div>
     </div>
   </modal>
 
-  <modal title="Lyric Upload" :show.sync="lyricModal" @ok="parseLyric()" :confirm="true">
+  <modal :title="$t('title.lrc_upload')" :show.sync="lyricModal" @ok="parseLyric()" :confirm="true">
     <div slot="body">
       <textarea v-model="lyricString"></textarea>
-      <upload class="btn" @uploaded="uploadLyric">lyric</upload>
+      <upload class="btn" @uploaded="uploadLyric">{{ $t('lyric') }}</upload>
     </div>
   </modal>
-  <modal title="Lyric Text Upload" :show.sync="lyricTextModal" @ok="parseLyricText()" :confirm="true">
+  <modal :title="$t('title.lyric_upload')" :show.sync="lyricTextModal" @ok="parseLyricText()" :confirm="true">
     <div slot="body">
       <textarea v-model="textLyricString"></textarea>
-      <upload class="btn" @uploaded="uploadLyricText">lyric text</upload>
+      <upload class="btn" @uploaded="uploadLyricText">{{ $t('lyric') }}</upload>
     </div>
   </modal>
 
-  <modal title="Lyric Info" :show.sync="lyricInfoModal">
+  <modal :title="$t('title.lyric_info')" :show.sync="lyricInfoModal">
     <div slot="body">
       <div class="form-group" v-for="field in infoFields" v-if="field.label">
         <label :for="'info-' + field.key" v-text="field.label"></label>
         <input :id="'info-' + field.key" :type="field.type || 'text'" v-model="runner.lrc.info[field.key]" />
       </div>
       <div class="form-group">
-        <label for="info-by">LRC Creator (You Name)</label>
+        <label for="info-by">{{ $t('info.lrc_creator') }}</label>
         <input id="info-by" type="text" v-model="userName" />
       </div>
     </div>
   </modal>
 
-  <modal title="Help" :show.sync="helpModal">
+  <modal :title="$t('title.help')" :show.sync="helpModal">
     <div slot="body" class="help">
-      <h2>shortcut key</h2>
-      <h3>play control</h3>
+      <h2>{{ $t('shortcut_key') }}</h2>
+      <h3>{{ $t('play_control') }}</h3>
       <ul>
-        <li><strong>&lt;Left&gt;:</strong> backward</li>
-        <li><strong>&lt;Right&gt;:</strong> forward</li>
+        <li><strong>{{ $t('left_key') }}:</strong> {{ $t('backward') }}</li>
+        <li><strong>{{ $t('right_key') }}:</strong> {{ $t('forward') }}</li>
       </ul>
-      <h3>make lyric</h3>
+      <h3>{{ $t('make_lrc') }}</h3>
       <ul>
-        <li><strong>&lt;Up&gt;:</strong> prev lyric</li>
-        <li><strong>&lt;Down&gt;:</strong> next lyric</li>
+        <li><strong>{{ $t('up_key') }}:</strong> {{ $t('prev_lyric') }}</li>
+        <li><strong>{{ $t('down_key') }}:</strong> {{ $t('next_lyric') }}</li>
       </ul>
     </div>
   </modal>
@@ -118,6 +131,8 @@ html, body, app {
 
 body {
   background-color: #0B2031;
+  font-size: 14px;
+  line-height: 18px;
 }
 
 * {
@@ -266,19 +281,19 @@ export default {
       infoFields: [
         {
           key: 'ti',
-          label: 'Song title',
+          label: this.$t('info.song_title'),
         },
         {
           key: 'ar',
-          label: 'Artist',
+          label: this.$t('info.artist'),
         },
         {
           key: 'al',
-          label: 'Album',
+          label: this.$t('info.album'),
         },
         {
           key: 'au',
-          label: 'Songtext Creator',
+          label: this.$t('info.songtext_creator'),
         },
       ],
       userName: cache.get('user-name', ''),
