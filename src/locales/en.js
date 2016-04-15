@@ -45,6 +45,8 @@ export default {
   play_to_this_lyric: 'play to this lyric',
   following_unsorted: 'The following unsorted',
 
+  combine: 'combine lyrics',
+
   ok: 'ok',
   cancel: 'cancel',
 }

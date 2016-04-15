@@ -45,6 +45,8 @@ export default {
   play_to_this_lyric: '播放到这条歌词',
   following_unsorted: '以下未排序',
 
+  combine: '合并歌词',
+
   ok: '确认',
   cancel: '取消',
 }

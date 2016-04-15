@@ -4,9 +4,11 @@
       v-for="(i, lyric) in runner.lrc.lyrics"
       :title="lyric.timestamp"
       :class="{cur: i == index}"
+      @dblclick="edit(i)"
+      @contextmenu.prevent="editMenu(i)"
     >
       <template v-if="editingIndex == i">
-        <input class="timestamp" type="number" v-model="lyric.timestamp" @keydown.enter="exitEdit"/>
+        <input class="timestamp" type="text" v-model="lyric.timestamp" @keydown.enter="exitEdit"/>
         <input class="content" type="text" v-model="lyric.content" @keydown.enter="exitEdit"/>
       </template>
       <template v-else>
@@ -42,7 +44,9 @@
     <li
       v-for="(i, lyric) in textLyrics"
       track-by="$index"
-      class="sorted"
+      class="unsorted"
+      @dblclick="editText(i)"
+      @contextmenu.prevent="editMenu(i)"
     >
       <template v-if="editingTextIndex == i">
         <input class="content" type="text" v-model="lyric" @keydown.enter="exitEdit"/>
@@ -86,7 +90,7 @@
     <li
       v-for="(i, lyric) in textLyrics"
       track-by="$index"
-      class="sorted"
+      class="unsorted"
     >
       {{lyric}}
     </li>
@@ -118,7 +122,7 @@ ul.lyrics {
     .conceal {
       display: none;
     }
-    &.sorted,
+    &.unsorted,
     &.division,
     {
       background-color: #0B2B3E;
@@ -205,6 +209,9 @@ export default {
     },
   },
   methods: {
+    editMenu(index) {
+      // TODO
+    },
     exitEdit() {
       this.editingIndex = -1
       this.editingTextIndex = -1
@@ -272,6 +279,7 @@ export default {
   },
   ready() {
     this.scroller = new Scroller(this.$el)
+
     globalKeydown
     .on(['enter', 'escape'], () => {
       if (this.editing) {

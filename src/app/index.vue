@@ -70,7 +70,11 @@
 
   <modal :title="$t('title.lyric_save')" :show.sync="saveModal">
     <div slot="body">
-      <textarea>{{runner.lrc.toString()}}</textarea>
+      <textarea>{{runner.lrc.toString(saveOptions)}}</textarea>
+      <label>
+        {{ $t('combine') }}
+        <input type="checkbox" v-model="saveOptions.combine" />
+      </label>
       <div class="btn" @click="saveLyric">
         <i class="icon-download"></i> {{ $t('lyric') }}
       </div>
@@ -278,6 +282,12 @@ export default {
       lyricInfoModal: false,
       helpModal: false,
 
+      saveOptions: {
+        combine: true,
+        lineFormat: '\r\n',
+        sort: true,
+      },
+
       infoFields: [
         {
           key: 'ti',
@@ -332,7 +342,7 @@ export default {
       this.initLyric()
     },
     saveLyric() {
-      saveLrc(this.runner.lrc.toString(), this.runner.lrc.info.ti || 'lyric')
+      saveLrc(this.runner.lrc.toString(this.saveOptions), this.runner.lrc.info.ti || 'lyric')
     },
     lyricsUpdate() {
       cache.set('lyric-string', this.runner.lrc.toString())
