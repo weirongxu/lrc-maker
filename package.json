@@ -19,6 +19,7 @@
     "type": "git",
     "url": "https://github.com/weirongxu/lrc-maker.git"
   },
+  "onlinePage": "https://weirongxu.github.io/lrc-maker/",
   "bugs": "https://github.com/weirongxu/lrc-maker/issues",
   "license": "MIT",
   "devDependencies": {

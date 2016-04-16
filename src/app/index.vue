@@ -109,17 +109,20 @@
 
   <modal :title="$t('title.help')" :show.sync="helpModal">
     <div slot="body" class="help">
-      <h2>{{ $t('shortcut_key') }}</h2>
-      <h3>{{ $t('play_control') }}</h3>
+      <h3>{{ $t('shortcut_key') }}</h3>
+      <h4>{{ $t('play_control') }}</h4>
       <ul>
         <li><strong>{{ $t('left_key') }}:</strong> {{ $t('backward') }}</li>
         <li><strong>{{ $t('right_key') }}:</strong> {{ $t('forward') }}</li>
       </ul>
-      <h3>{{ $t('make_lrc') }}</h3>
+      <h4>{{ $t('make_lrc') }}</h4>
       <ul>
         <li><strong>{{ $t('up_key') }}:</strong> {{ $t('prev_lyric') }}</li>
         <li><strong>{{ $t('down_key') }}:</strong> {{ $t('next_lyric') }}</li>
       </ul>
+      <div class="link">
+        <a :href="PKG.homepage">github</a>
+      </div>
     </div>
   </modal>
 </template>
@@ -235,13 +238,17 @@ modal {
 
 .help {
   color: #333;
-  h2 {
-    margin: 5px 0;
+  h3, h4, a {
     color: $blue-color;
   }
   h3 {
+    margin: 5px 0;
+  }
+  h4 {
     margin: 0;
-    color: $blue-color;
+  }
+  a {
+    font-weight: bolder;
   }
   ul {
     list-style-type: none;
@@ -267,6 +274,7 @@ export default {
     var lrc = Lrc.parse(lyricString)
 
     return {
+      PKG: PKG,
       musicUrl: cache.get('music', ''),
       editing: cache.get('editing', false),
 
@@ -311,7 +319,7 @@ export default {
   },
   methods: {
     initLyric() {
-      this.runner.lrc.info.re = `${PKG.name} (${PKG.homepage})`
+      this.runner.lrc.info.re = `${PKG.name} (${PKG.onlinePage})`
       this.runner.lrc.info.ve = PKG.version
       if (this.$refs.player.duration)
         this.runner.lrc.info.length = timeFilter(this.$refs.player.duration)
