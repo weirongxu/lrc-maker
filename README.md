@@ -3,4 +3,5 @@
 Make LRC online
 
 ## TODO
-- menu click outer for mobile
+- drag and drop for lrc list
+- menu click outer
