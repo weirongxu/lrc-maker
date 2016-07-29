@@ -30,6 +30,10 @@ module.exports = {
         loader: 'json',
       },
       {
+        test: /\.(yml|yaml)$/,
+        loaders: ['json', 'yaml'],
+      },
+      {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel',
@@ -44,6 +48,6 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.vue'],
+    extensions: ['', '.js', '.vue', '.yml'],
   },
 }
