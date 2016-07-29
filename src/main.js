@@ -5,6 +5,6 @@ import './i18n'
 Vue.config.debug = true
 
 new Vue({
-  el: document.getElementsByTagName('body')[0],
+  el: document.getElementById('body'),
   components: {App},
 })
