@@ -276,7 +276,7 @@ export default {
     return {
       PKG: PKG,
       musicUrl: cache.get('music', ''),
-      editing: cache.get('editing', false),
+      editing: cache.get('editing', true),
 
       lyricString: lyricString,
       runner: new Runner(lrc),
