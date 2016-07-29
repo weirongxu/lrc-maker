@@ -130,7 +130,7 @@
 <style lang="sass">
 @import 'sass/index';
 
-html, body, app {
+html, body, #body, app {
   width: 100%;
   height: 100%;
   margin: 0;
