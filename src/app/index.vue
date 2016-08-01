@@ -137,7 +137,6 @@ html, body, #body, app {
 }
 
 body {
-  background-color: #0B2031;
   font-size: 14px;
   line-height: 18px;
 }

@@ -99,22 +99,24 @@
 
 <style lang="sass" scoped>
 ul.lyrics {
+  $dark-color: #f1f1f1;
+  $light-color: #fbfbfb;
+  $face-color: #044d98;
   list-style-type: none;
   margin: 0;
   padding: 0;
+  background-color: $dark-color;
   > li {
     min-height: 40px;
     text-align: center;
-    color: #BBB;
+    color: #044d98;
     padding: 10px 0;
     &.cur {
-      color: #fff;
+      color: #044d98;
       text-shadow: 1px 1px 1px #aaa;
-      background-color: #162C3E;
+      background-color: $light-color;
     }
     &:hover {
-      background-color: #263746;
-      color: #C3C3C3;
       .conceal {
         display: inline-block;
       }
@@ -125,7 +127,7 @@ ul.lyrics {
     &.unsorted,
     &.division,
     {
-      background-color: #0B2B3E;
+      background-color: $dark-color;
     }
     &.division {
       display: block;
@@ -138,7 +140,6 @@ ul.lyrics {
   }
   &.editing {
     > li {
-      box-shadow: 0px -3px 5px -2px #0D3946;
       padding: 0;
 
       display: flex;
