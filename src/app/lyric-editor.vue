@@ -21,26 +21,26 @@
             </div>
             <ul slot="list">
               <!-- <li @click="setTimestampText(i)">                   -->
-              <!--   <i class="icon-exchange"></i> {{ $t('play_to_this_lyric') }} -->
+              <!--   <i class="icon-exchange"></i> {{ $t('lyric_editor.play_to_this_lyric') }} -->
               <!-- </li>                                               -->
               <li @click="clearTimestamp(i)">
-                <i class="icon-cancel"></i> {{ $t('clear_timestamp') }}
+                <i class="icon-cancel"></i> {{ $t('lyric_editor.clear_timestamp') }}
               </li>
               <li @click="edit(i)">
-                <i class="icon-edit"></i> {{ $t('edit') }}
+                <i class="icon-edit"></i> {{ $t('lyric_editor.edit') }}
               </li>
               <li @click="insert(i)">
-                <i class="icon-plus"></i> {{ $t('add') }}
+                <i class="icon-plus"></i> {{ $t('lyric_editor.add') }}
               </li>
               <li @click="remove(i)">
-                <i class="icon-trash"></i> {{ $t('remove') }}
+                <i class="icon-trash"></i> {{ $t('lyric_editor.remove') }}
               </li>
             </ul>
           </menu>
         </div>
       </template>
     </li>
-    <li v-if="textLyrics.length" class="division">{{ $t('following_unsorted') }}</li>
+    <li v-if="textLyrics.length" class="division">{{ $t('lyric_editor.following_unsorted') }}</li>
     <li
       v-for="(i, lyric) in textLyrics"
       track-by="$index"
@@ -60,16 +60,16 @@
             </div>
             <ul slot="list">
               <!-- <li @click="setTimestamp(i)">                       -->
-              <!--   <i class="icon-exchange"></i> {{ $t('play_to_this_lyric') }} -->
+              <!--   <i class="icon-exchange"></i> {{ $t('lyric_editor.play_to_this_lyric') }} -->
               <!-- </li>                                               -->
               <li @click="editText(i)">
-                <i class="icon-edit"></i> {{ $t('edit') }}
+                <i class="icon-edit"></i> {{ $t('lyric_editor.edit') }}
               </li>
               <li @click="insertText(i)">
-                <i class="icon-plus"></i> {{ $t('add') }}
+                <i class="icon-plus"></i> {{ $t('lyric_editor.add') }}
               </li>
               <li @click="removeText(i)">
-                <i class="icon-trash"></i> {{ $t('remove') }}
+                <i class="icon-trash"></i> {{ $t('lyric_editor.remove') }}
               </li>
             </ul>
           </menu>
@@ -86,7 +86,7 @@
     >
       {{lyric.content}}
     </li>
-    <li v-if="textLyrics.length" class="division">{{ $t('following_unsorted') }}</li>
+    <li v-if="textLyrics.length" class="division">{{ $t('lyric_editor.following_unsorted') }}</li>
     <li
       v-for="(i, lyric) in textLyrics"
       track-by="$index"

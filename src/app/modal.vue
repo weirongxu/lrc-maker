@@ -11,8 +11,8 @@
       <div class="footer">
         <slot name="footer">
           <div v-if="confirm" class="btn-group">
-            <div class="btn" @click="ok">{{ $t('ok') }}</div>
-            <div class="btn" @click="cancel">{{ $t('cancel') }}</div>
+            <div class="btn" @click="ok">{{ $t('modal.button.ok') }}</div>
+            <div class="btn" @click="cancel">{{ $t('modal.button.cancel') }}</div>
           </div>
         </slot>
       </div>

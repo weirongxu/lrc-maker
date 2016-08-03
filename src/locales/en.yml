@@ -1,48 +1,66 @@
-lrc: LRC
-lrc_info: info
-lyric: lyric
-music: music
-upload: upload
-save: save
-close_edit: close edit
-open_edit: open edit
+button:
+  upload: upload
+  save: save
+  close_edit: close edit
+  open_edit: open edit
+  help: help
 
-title:
-  lyric_save: Lyric Save
-  lrc_upload: LRC Upload
-  lyric_upload: Lyric Upload
-  lyric_info: Lyric Info
-  help: Help
+  lrc_info: info
+  clear_lyric: clear lyric
+  prev_lyric: prev lyric
+  next_lyric: next lyric
 
-info:
-  song_title: Song Title
-  artist: Artist
-  album: Album
-  songtext_creator: Songtext Creator
-  lrc_creator: LRC Creator
+menu:
+  upload:
+    lrc: LRC
+    lyric: lyric text
+    music: music
 
-prev_lyric: prev lyric
-next_lyric: next lyric
+modal:
+  lyric_save:
+    title: Lyrics Save
+    combine: combine lyrics
+    download: lyrics file download
+  lrc_upload:
+    title: LRC upload
+    description: Upload timestamped lyrics
+    upload: upload by file
+  lyric_upload:
+    title: Upload Text Lyrics
+    description: Plain Text lyrics, lyrics divided by a newline
+    upload: upload by file
+  lyric_info:
+    title: Lyrics Info
+    fields:
+      song_title: Sone Title
+      artist: Artist
+      album: Album
+      songtext_creator: Songtext Creator
+      lrc_creator: LRC Creator
+  help:
+    title: Help
+    shortcut_key: shortcut key
+    play_control:
+      title: play control
+      left_key: <Left>
+      right_key: <Right>
+      backward: backward
+      forward: forward
+    make_lrc:
+      title: make lrc
+      up_key: <Up>
+      down_key: <Down>
+      prev_lyric: prev lyric
+      next_lyric: next lyric
+    source_code: source code
+  button:
+    ok: ok
+    cancel: cancel
 
-play_control: play control
-shortcut_key: shortcut key
-make_lrc: make lrc
-left_key: <Left>
-right_key: <Right>
-up_key: <Up>
-down_key: <Down>
-
-backward: backward
-forward: forward
-
-edit: edit
-add: add
-remove: remove
-clear_timestamp: clear timestamp
-play_to_this_lyric: play to this lyric
-following_unsorted: The following unsorted
-
-combine: combine lyrics
-
-ok: ok
-cancel: cancel
+lyric_editor:
+  edit: edit
+  add: add
+  remove: remove
+  clear_timestamp: clear timestamp
+  play_to_this_lyric: play to this lyric
+  following_unsorted: The following unsorted
