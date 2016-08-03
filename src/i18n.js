@@ -11,6 +11,6 @@ if (! (lang in locales)) {
 }
 
 Vue.use(i18n, {
-  lang: 'en' || lang,
+  lang: lang,
   locales: locales,
 })
