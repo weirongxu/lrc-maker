@@ -102,7 +102,6 @@ time-panel {
 
 <script>
 import Range from './range'
-import Tooltip from './tooltip'
 import TimePanel from './time-panel'
 import {globalKeydown, isMobile} from './utils'
 
@@ -219,7 +218,6 @@ export default {
   },
   components: {
     Range,
-    Tooltip,
     TimePanel,
   },
   replace: false,

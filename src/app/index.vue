@@ -1,9 +1,9 @@
 <template>
   <header>
     <div class="left">
-      <menu class="btn">
+      <nav-menu class="menu-item" :title="$t('button.upload')">
         <div slot="target">
-          <i class="icon-upload"></i> {{ $t('button.upload') }}
+          <i class="icon-upload"></i>
         </div>
         <ul slot="list">
           <li @click="lyricModal=true">
@@ -16,21 +16,21 @@
             <upload accept="audio/*" read-format="DataURL" @uploaded="uploadMusic">{{ $t('menu.upload.music')}}</upload>
           </li>
         </ul>
-      </menu>
-      <div class="btn" @click="saveModal=true">
-        <i class="icon-save"></i> {{ $t('button.save') }}
+      </nav-menu>
+      <div class="menu-item" @click="saveModal=true" :title="$t('button.save')">
+        <i class="icon-save"></i>
       </div>
     </div>
     <div class="right">
-      <div class="btn" @click="editing=!editing">
+      <div class="menu-item" @click="editing=!editing" :title="editing ? $t('button.close_edit') : $t('button.open_edit')">
         <template v-if="editing">
-          <i class="icon-cancel"></i> {{ $t('button.close_edit') }}
+          <i class="icon-cancel"></i>
         </template>
         <template v-else>
-          <i class="icon-edit"></i> {{ $t('button.open_edit') }}
+          <i class="icon-edit"></i>
         </template>
       </div>
-      <div class="btn" @click="helpModal=true">
+      <div class="menu-item" @click="helpModal=true" :title="$t('button.help')">
         <i class="icon-help-circled"></i>
       </div>
     </div>
@@ -55,16 +55,16 @@
 
   <footer>
     <div class="left">
-      <div class="btn" v-if="editing" @click="lyricInfoModal=true">
+      <div class="menu-item" v-if="editing" @click="lyricInfoModal=true">
         <i class="icon-info"></i> {{ $t('button.lrc_info') }}
       </div>
-      <div class="btn" @click="clearLyric">
+      <div class="menu-item" @click="clearLyric">
         <i class="icon-trash"></i> {{ $t('button.clear_lyric') }}
       </div>
     </div>
     <div class="right" v-if="editing">
-      <div class="btn" title="[UP]" @click="$refs.lyric.$emit('prevlyric')">{{ $t('button.prev_lyric') }}</div>
-      <div class="btn" title="[DOWN]" @click="$refs.lyric.$emit('nextlyric')">{{ $t('button.next_lyric') }}</div>
+      <div class="menu-item" title="[UP]" @click="$refs.lyric.$emit('prevlyric')">{{ $t('button.prev_lyric') }}</div>
+      <div class="menu-item" title="[DOWN]" @click="$refs.lyric.$emit('nextlyric')">{{ $t('button.next_lyric') }}</div>
     </div>
   </footer>
 
@@ -156,7 +156,6 @@ header, footer {
   @extend %row;
   width: 100%;
   background-color: $blue-color;
-  padding: 10px;
   .left {
     float: left;
   }
@@ -207,6 +206,18 @@ modal {
     border: 1px solid #D6D6D6;
     padding: 0 3px;
     border-radius: 5px;
+  }
+}
+
+.menu-item {
+  display: inline-block;
+  color: white;
+  $height: 40px;
+  height: $height;
+  line-height: $height;
+  padding: 0 8px;
+  &:hover {
+    background-color: darken($blue-color, 10%);
   }
 }
 
@@ -264,7 +275,7 @@ import Player from './player'
 import LyricEditor from './lyric-editor'
 import Modal from './modal'
 import Menu from './menu'
-import Tooltip from './tooltip'
+import NavMenu from './nav-menu'
 import {Lrc, Runner} from 'lrc-kit'
 import {saveLrc, cache, timeFilter} from './utils'
 import PKG from '../../package.json'
@@ -396,7 +407,7 @@ export default {
     LyricEditor,
     Modal,
     Menu,
-    Tooltip,
+    NavMenu,
   },
   replace: false,
 }

@@ -84,7 +84,7 @@ export default {
   props: {
     enterDelay: {
       type: Number,
-      default: 0.5,
+      default: 0.1,
     },
     leaveDelay: {
       type: Number,
