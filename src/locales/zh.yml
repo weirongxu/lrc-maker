@@ -6,7 +6,7 @@ button:
   help: 帮助
 
   lrc_info: 信息
-  clear_lyric: 清除歌词
+  remove_lyric: 清除歌词
   prev_lyric: 上一条歌词
   next_lyric: 下一条歌词
 
@@ -19,6 +19,14 @@ menu:
 modal:
   lyric_save:
     title: 保存歌词
+    info_title: 歌词信息
+    fields:
+      song_title: 歌名
+      artist: 艺术家
+      album: 专辑
+      songtext_creator: 歌词作者
+      lrc_creator: LRC 创建者
+    save_title: 歌词
     combine: 合并歌词
     download: 下载歌词文件
   lrc_upload:
@@ -29,14 +37,6 @@ modal:
     title: 上传歌词文本
     description: 纯文本歌词，用换行对歌词划分
     upload: 通过文件上传
-  lyric_info:
-    title: 歌词信息
-    fields:
-      song_title: 歌名
-      artist: 艺术家
-      album: 专辑
-      songtext_creator: 歌词作者
-      lrc_creator: LRC 创建者
   help:
     title: 帮助
     shortcut_key: 快捷键
@@ -61,6 +61,6 @@ lyric_editor:
   edit: 编辑
   add: 添加
   remove: 删除
-  clear_timestamp: 删除时间轴
+  remove_timestamp: 删除时间轴
   play_to_this_lyric: 播放到这条歌词
   following_unsorted: 以下未排序

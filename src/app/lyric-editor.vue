@@ -23,8 +23,8 @@
               <!-- <li @click="setTimestampText(i)">                   -->
               <!--   <i class="icon-exchange"></i> {{ $t('lyric_editor.play_to_this_lyric') }} -->
               <!-- </li>                                               -->
-              <li @click="clearTimestamp(i)">
-                <i class="icon-cancel"></i> {{ $t('lyric_editor.clear_timestamp') }}
+              <li @click="removeTimestamp(i)">
+                <i class="icon-cancel"></i> {{ $t('lyric_editor.remove_timestamp') }}
               </li>
               <li @click="edit(i)">
                 <i class="icon-edit"></i> {{ $t('lyric_editor.edit') }}
@@ -239,12 +239,12 @@ export default {
     insertText(index) {
       this.textLyrics.splice(index+1, 0, this.textLyrics[index])
     },
-    clearTimestamp(index) {
+    removeTimestamp(index) {
       var lyrics = this.runner.lrc.lyrics
-      var clearLyrics = lyrics
+      var removeLyrics = lyrics
       .splice(index, lyrics.length - index)
       .map((lyric) => { return lyric.content })
-      this.textLyrics.splice(0, 0, ...clearLyrics)
+      this.textLyrics.splice(0, 0, ...removeLyrics)
       this.$emit('update')
     },
     setTimestamp(index) {
@@ -311,7 +311,7 @@ export default {
       this.runner.lrcUpdate()
     },
     prevlyric() {
-      this.clearTimestamp(this.runner.lrc.lyrics.length - 1)
+      this.removeTimestamp(this.runner.lrc.lyrics.length - 1)
     },
     nextlyric() {
       this.setTimestampText(0)

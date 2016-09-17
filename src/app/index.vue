@@ -55,11 +55,8 @@
 
   <footer>
     <div class="left">
-      <div class="menu-item" v-if="editing" @click="lyricInfoModal=true">
-        <i class="icon-info"></i> {{ $t('button.lrc_info') }}
-      </div>
-      <div class="menu-item" @click="clearLyric">
-        <i class="icon-trash"></i> {{ $t('button.clear_lyric') }}
+      <div class="menu-item" @click="removeLyric">
+        <i class="icon-trash"></i> {{ $t('button.remove_lyric') }}
       </div>
     </div>
     <div class="right" v-if="editing">
@@ -70,7 +67,18 @@
 
   <modal :title="$t('modal.lyric_save.title')" :show.sync="saveModal">
     <div slot="body">
-      <textarea>{{runner.lrc.toString(saveOptions)}}</textarea>
+      <h3>{{$t('modal.lyric_save.info_title')}}</h3>
+      <div class="form-group" v-for="field in infoFields" v-if="field.label">
+        <label :for="'info-' + field.key" v-text="field.label"></label>
+        <input :id="'info-' + field.key" :type="field.type || 'text'" v-model="runner.lrc.info[field.key]" />
+      </div>
+      <div class="form-group">
+        <label for="info-by">{{ $t('modal.lyric_save.fields.lrc_creator') }}</label>
+        <input id="info-by" type="text" v-model="userName" />
+      </div>
+
+      <h3>{{$t('modal.lyric_save.save_title')}}</h3>
+      <textarea>{{saveLyrics}}</textarea>
       <label>
         {{ $t('modal.lyric_save.combine') }}
         <input type="checkbox" v-model="saveOptions.combine" />
@@ -93,19 +101,6 @@
       <p>{{ $t('modal.lyric_upload.description') }}</p>
       <textarea v-model="textLyricString"></textarea>
       <upload class="btn" @uploaded="uploadLyricText">{{ $t('modal.lyric_upload.upload') }}</upload>
-    </div>
-  </modal>
-
-  <modal :title="$t('modal.lyric_info.title')" :show.sync="lyricInfoModal">
-    <div slot="body">
-      <div class="form-group" v-for="field in infoFields" v-if="field.label">
-        <label :for="'info-' + field.key" v-text="field.label"></label>
-        <input :id="'info-' + field.key" :type="field.type || 'text'" v-model="runner.lrc.info[field.key]" />
-      </div>
-      <div class="form-group">
-        <label for="info-by">{{ $t('modal.lyric_info.fields.lrc_creator') }}</label>
-        <input id="info-by" type="text" v-model="userName" />
-      </div>
     </div>
   </modal>
 
@@ -184,6 +179,9 @@ lyric-editor {
 }
 
 modal {
+  h3 {
+    margin: 10px 0;
+  }
   textarea {
     width: 100%;
     border: 1px solid #D6D6D6;
@@ -299,7 +297,6 @@ export default {
       lyricModal: false,
       lyricTextModal: false,
       saveModal: false,
-      lyricInfoModal: false,
       helpModal: false,
 
       saveOptions: {
@@ -311,22 +308,24 @@ export default {
       infoFields: [
         {
           key: 'ti',
-          label: this.$t('modal.lyric_info.fields.song_title'),
+          label: this.$t('modal.lyric_save.fields.song_title'),
         },
         {
           key: 'ar',
-          label: this.$t('modal.lyric_info.fields.artist'),
+          label: this.$t('modal.lyric_save.fields.artist'),
         },
         {
           key: 'al',
-          label: this.$t('modal.lyric_info.fields.album'),
+          label: this.$t('modal.lyric_save.fields.album'),
         },
         {
           key: 'au',
-          label: this.$t('modal.lyric_info.fields.songtext_creator'),
+          label: this.$t('modal.lyric_save.fields.songtext_creator'),
         },
       ],
       userName: cache.get('user-name', ''),
+
+      saveLyrics: '',
     }
   },
   methods: {
@@ -337,6 +336,7 @@ export default {
         this.runner.lrc.info.length = timeFilter(this.$refs.player.duration)
       if (this.userName)
         this.runner.lrc.info.by = this.userName
+      this.lyricsUpdate()
     },
     uploadLyric(lyric) {
       this.lyricString = lyric
@@ -355,7 +355,7 @@ export default {
       // cache.set('music', music)
       this.musicUrl = music
     },
-    clearLyric() {
+    removeLyric() {
       this.lyricString = ''
       this.textLyrics = []
       this.runner = new Runner()
@@ -365,6 +365,7 @@ export default {
       saveLrc(this.runner.lrc.toString(this.saveOptions), this.runner.lrc.info.ti || 'lyric')
     },
     lyricsUpdate() {
+      this.saveLyrics = this.runner.lrc.toString()
       cache.set('lyric-string', this.runner.lrc.toString())
     },
     playto(time) {
@@ -376,6 +377,13 @@ export default {
     durationchange(duration) {
       this.runner.lrc.info.length = timeFilter(duration)
     },
+    cleanInfo() {
+      for(var key in this.runner.lrc.info) {
+        if (this.runner.lrc.info[key].length == 0) {
+          delete this.runner.lrc.info[key]
+        }
+      }
+    }
   },
   ready() {
     this.initLyric()
@@ -397,9 +405,16 @@ export default {
       },
     },
     userName(name) {
-      this.runner.lrc.info.by = name
+      this.$set('runner.lrc.info.by', name)
       cache.set('user-name', name)
-    }
+    },
+    'runner.lrc.info': {
+      deep: true,
+      handler() {
+        this.cleanInfo()
+        this.lyricsUpdate()
+      }
+    },
   },
   components: {
     Upload,

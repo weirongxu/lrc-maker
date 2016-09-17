@@ -6,7 +6,7 @@ button:
   help: help
 
   lrc_info: info
-  clear_lyric: clear lyric
+  remove_lyric: remove lyric
   prev_lyric: prev lyric
   next_lyric: next lyric
 
@@ -19,6 +19,14 @@ menu:
 modal:
   lyric_save:
     title: Lyrics Save
+    info_title: Lyrics Info
+    fields:
+      song_title: Sone Title
+      artist: Artist
+      album: Album
+      songtext_creator: Songtext Creator
+      lrc_creator: LRC Creator
+    save_title: Lyrics
     combine: combine lyrics
     download: lyrics file download
   lrc_upload:
@@ -29,14 +37,6 @@ modal:
     title: Upload Text Lyrics
     description: Plain Text lyrics, lyrics divided by a newline
     upload: upload by file
-  lyric_info:
-    title: Lyrics Info
-    fields:
-      song_title: Sone Title
-      artist: Artist
-      album: Album
-      songtext_creator: Songtext Creator
-      lrc_creator: LRC Creator
   help:
     title: Help
     shortcut_key: shortcut key
@@ -61,6 +61,6 @@ lyric_editor:
   edit: edit
   add: add
   remove: remove
-  clear_timestamp: clear timestamp
+  remove_timestamp: remove timestamp
   play_to_this_lyric: play to this lyric
   following_unsorted: The following unsorted
