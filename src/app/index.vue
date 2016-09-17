@@ -214,6 +214,7 @@ modal {
   height: $height;
   line-height: $height;
   padding: 0 8px;
+  cursor: pointer;
   &:hover {
     background-color: darken($blue-color, 10%);
   }
