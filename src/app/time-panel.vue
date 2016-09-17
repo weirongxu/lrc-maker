@@ -14,7 +14,7 @@
 </style>
 
 <script>
-import {cache, timeFilter} from './utils'
+import {cache, timestamp2timestr} from './utils'
 
 export default {
   data() {
@@ -33,7 +33,9 @@ export default {
     },
   },
   filters: {
-    time: timeFilter,
+    time(timestamp) {
+      return timestamp2timestr(timestamp, true)
+    },
   },
   watch: {
     remain(val) {

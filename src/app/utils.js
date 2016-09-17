@@ -280,7 +280,7 @@ export class Dragger extends Unidragger {
   }
 }
 
-export function timeFilter(time) {
+export function timestamp2timestr(time, onlyInteger=false) {
   if (! time)
     time = 0
   var padZero = (num, size=2) => {
@@ -288,7 +288,16 @@ export function timeFilter(time) {
     while (num.split('.')[0].length < size) num = '0' + num
     return num
   }
-  return `${padZero(parseInt(time/60))}:${padZero(parseInt(time%60))}`
+  if (onlyInteger) {
+    return `${padZero(parseInt(time/60, 10))}:${padZero(parseInt(time%60, 10))}`
+  } else {
+    return `${padZero(parseInt(time/60, 10))}:${padZero((time%60).toFixed(2), 2)}`
+  }
+}
+
+export function timestr2timestamp(str) {
+  var [minute, second] = str.split(':')
+  return parseInt(minute, 10) * 60 + parseFloat(second)
 }
 
 export class TooltipPosition {

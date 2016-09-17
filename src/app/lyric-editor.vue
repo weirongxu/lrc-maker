@@ -179,7 +179,7 @@ ul.lyrics {
 
 <script>
 import {Runner} from 'lrc-kit'
-import {Scroller, cache, globalKeydown, timeFilter} from './utils'
+import {Scroller, cache, globalKeydown, timestamp2timestr} from './utils'
 import Menu from './menu'
 
 export default {
@@ -276,7 +276,7 @@ export default {
     },
   },
   filters: {
-    time: timeFilter,
+    time: timestamp2timestr,
   },
   ready() {
     this.scroller = new Scroller(this.$el)

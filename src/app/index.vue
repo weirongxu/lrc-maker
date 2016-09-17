@@ -276,7 +276,7 @@ import Modal from './modal'
 import Menu from './menu'
 import NavMenu from './nav-menu'
 import {Lrc, Runner} from 'lrc-kit'
-import {saveLrc, cache, timeFilter} from './utils'
+import {saveLrc, cache, timestamp2timestr} from './utils'
 import PKG from '../../package.json'
 
 export default {
@@ -334,7 +334,7 @@ export default {
       this.runner.lrc.info.re = `${PKG.name} (${PKG.onlinePage})`
       this.runner.lrc.info.ve = PKG.version
       if (this.$refs.player.duration)
-        this.runner.lrc.info.length = timeFilter(this.$refs.player.duration)
+        this.runner.lrc.info.length = timestamp2timestr(this.$refs.player.duration)
       if (this.userName)
         this.runner.lrc.info.by = this.userName
       this.lyricsUpdate()
@@ -376,7 +376,7 @@ export default {
       this.$refs.lyric.$emit('timeupdate', timestamp)
     },
     durationchange(duration) {
-      this.runner.lrc.info.length = timeFilter(duration)
+      this.runner.lrc.info.length = timestamp2timestr(duration)
     },
     cleanInfo() {
       for(var key in this.runner.lrc.info) {
