@@ -3,5 +3,6 @@
 Make LRC online
 
 ## TODO
-- drag and drop for lrc list
-- menu click outer
+- [ ] menu click outer
+- [ ] lyrics chronological interval
+- [ ] drag and drop for lrc list
