@@ -1,5 +1,5 @@
 <template>
-  <div class="root" :class="{mobile: isMobile}" v-if="src.length" @mouseover="hover=true" @mouseleave="hover=false">
+  <div class="root" :class="{mobile: isMobile}" v-show="src.length" @mouseover="hover=true" @mouseleave="hover=false">
     <div class="player">
       <div class="ctrl-btn" title="[SPACE]" @click="paused = !paused">
         <i v-if="paused" class="icon-play"></i>
@@ -140,7 +140,7 @@ export default {
     },
   },
   ready() {
-    this.audio = document.createElement('audio')
+    this.audio = document.createElement('video')
     this.audio.addEventListener('durationchange', () => {
       this.$emit('durationchange', this.audio.duration)
     })
@@ -196,10 +196,9 @@ export default {
   },
   watch: {
     src(val) {
-      this.audio.pause()
+      this.paused = true
       this.audio.src = val
       this.audio.preload = 'metadata'
-      this.paused = this.audio.paused
       this.process = 0
       this.volume = this.audio.volume
       this.currentTime = this.audio.currentTime

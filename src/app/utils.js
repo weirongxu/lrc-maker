@@ -305,7 +305,7 @@ export class TooltipPosition {
     'bottom',
     'right',
     'top',
-    'left'
+    'left',
   ]
 
   constructor(target, tooltip, dir='bottom') {
