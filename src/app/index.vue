@@ -366,8 +366,8 @@ export default {
       saveLrc(this.runner.lrc.toString(this.saveOptions), this.runner.lrc.info.ti || 'lyric')
     },
     lyricsUpdate() {
-      this.saveLyrics = this.runner.lrc.toString()
-      cache.set('lyric-string', this.runner.lrc.toString())
+      this.saveLyrics = this.runner.lrc.toString(this.saveOptions)
+      cache.set('lyric-string', this.runner.lrc.toString(this.saveOptions))
     },
     playto(time) {
       this.$refs.player.playto(time)
@@ -378,7 +378,7 @@ export default {
     durationchange(duration) {
       this.runner.lrc.info.length = timestamp2timestr(duration)
     },
-    cleanInfo() {
+    cleanEmptyInfo() {
       for(var key in this.runner.lrc.info) {
         if (this.runner.lrc.info[key].length == 0) {
           delete this.runner.lrc.info[key]
@@ -412,9 +412,15 @@ export default {
     'runner.lrc.info': {
       deep: true,
       handler() {
-        this.cleanInfo()
+        this.cleanEmptyInfo()
         this.lyricsUpdate()
       }
+    },
+    saveOptions: {
+      deep: true,
+      handler() {
+        this.lyricsUpdate()
+      },
     },
   },
   components: {
