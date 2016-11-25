@@ -80,6 +80,7 @@ html, body, #body, .app {
 
 body {
   font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
   line-height: 18px;
 }
 

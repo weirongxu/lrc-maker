@@ -72,8 +72,6 @@
 
       this.lyricUpdate()
     },
-    mounted() {
-    },
     methods: {
       save() {
         saveLrc(this.runner.lrc.toString(this.saveOptions), this.runner.lrc.info.ti || 'lyric')
@@ -91,7 +89,7 @@
     },
     watch: {
       userName(name) {
-        this.set('runner.lrc.info.by', name)
+        this.$set(this.runner, 'runner.lrc.info.by', name)
         cache.userName = name
       },
       lyric(){

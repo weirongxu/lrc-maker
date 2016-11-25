@@ -119,7 +119,8 @@ export default {
       currentTime: 0,
       duration: 0,
       volume: 0,
-      src: ''
+      src: '',
+      audio: null,
     }
   },
   methods: {
@@ -130,14 +131,19 @@ export default {
       this.audio.volume = this.volume = percent
     },
     playto(time) {
-      this.currentTime = this.audio.currentTime = time
       if (this.paused) {
         this.paused = false
       }
+      // Maybe not understand why here use `nextTick`
+      // This's bug of chrome, dataURL music will overlap play when change currentTime before call `audio.play()`
+      this.$nextTick(() => {
+        this.currentTime = this.audio.currentTime = time
+      })
     },
   },
   mounted() {
     this.audio = document.createElement('video')
+    this.audio.preload = 'metadata'
     this.audio.addEventListener('durationchange', () => {
       this.duration = this.audio.duration
     })
@@ -158,35 +164,22 @@ export default {
       return false
     })
     .on('arrowleft', (event) => {
-      if (event.ctrlKey) {
-        this.$emit('largebackward')
-      } else {
-        this.$emit('backward')
-      }
+      this.$emit('backward')
       return false
     })
     .on('arrowright', (event) => {
-      if (event.ctrlKey) {
-        this.$emit('largeforward')
-      } else {
-        this.$emit('forward')
-      }
+      this.$emit('forward')
       return false
     })
-  },
-  events: {
-    backward() {
-      this.playto(this.audio.currentTime - 5)
-    },
-    largebackward() {
-      this.playto(this.audio.currentTime - 20)
-    },
-    forward() {
-      this.playto(this.audio.currentTime + 5)
-    },
-    largeforward() {
-      this.playto(this.audio.currentTime + 20)
-    },
+
+
+    this
+      .$on('backward', () => {
+        this.playto(this.audio.currentTime - 5)
+      })
+      .$on('forward', () => {
+        this.playto(this.audio.currentTime + 5)
+      })
   },
   watch: {
     src: {
@@ -195,7 +188,6 @@ export default {
         if (src) {
           this.paused = true
           this.audio.src = src
-          this.audio.preload = 'metadata'
           this.process = 0
           this.volume = this.audio.volume
           this.currentTime = this.audio.currentTime
