@@ -1,5 +1,5 @@
 <template>
-  <div class="nav-menu" v-el:menu>
+  <div class="nav-menu" ref="menu">
     <span class="target">
       <slot name="target"></slot>
     </span>
@@ -55,13 +55,10 @@ export default {
         top: 0,
         left: 0,
       },
+      show: false,
     }
   },
   props: {
-    show: {
-      type: Boolean,
-      default: false,
-    },
     enterDelay: {
       type: Number,
       default: 0.1,
@@ -71,8 +68,8 @@ export default {
       default: 0.5,
     },
   },
-  ready() {
-    var menu = this.$els.menu
+  mounted() {
+    var menu = this.$refs.menu
     var dhover = new DelayHover(menu, {
       enterDelay: this.enterDelay,
       leaveDelay: this.leaveDelay,

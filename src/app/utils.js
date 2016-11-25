@@ -175,7 +175,7 @@ export function saveLrc(str, name) {
 }
 
 export class Cache {
-  version = 1
+  version = 2
 
   constructor(prefix = 'lrc') {
     this.prefix = prefix

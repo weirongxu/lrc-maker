@@ -1,4 +1,3 @@
-var isProduction = process.env.NODE_ENV === 'production'
 var path = require('path')
 
 module.exports = {
@@ -7,16 +6,15 @@ module.exports = {
   output: {
     filename: 'main.js',
     path: './build/assets/',
-    publicPath: isProduction ? './assets/' : '/assets/',
   },
   module: {
-    preLoaders: [
-      {
-        test: /\.(vue|js)$/,
-        loader: 'eslint',
-        exclude: /(node_modules|bower_components)/,
-      },
-    ],
+    // preLoaders: [
+    //   {
+    //     test: /\.(vue|js)$/,
+    //     loader: 'eslint',
+    //     exclude: /(node_modules|bower_components)/,
+    //   },
+    // ],
     loaders: [
       {
         test: /\.(woff|woff2|ttf|eot|svg)(\?[\s\S]+)?$/,
@@ -24,6 +22,14 @@ module.exports = {
         query: {
           limit: 1000,
         }
+      },
+      {
+        test: /\.css$/,
+        loaders: ['style', 'css', 'resolve-url']
+      },
+      {
+        test: /\.scss$/,
+        loaders: ['style', 'css', 'resolve-url', 'sass?sourceMap']
       },
       {
         test: /\.json$/,
@@ -37,9 +43,6 @@ module.exports = {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel',
-        query: {
-          presets: ['es2015', 'stage-0']
-        }
       },
       {
         test: /\.vue$/,
@@ -48,6 +51,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.vue', '.yml'],
+    extensions: ['', '.js', '.vue', '.yml', '.scss'],
   },
+  devtool: 'inline-source-map',
 }

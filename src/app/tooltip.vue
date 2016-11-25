@@ -1,8 +1,8 @@
 <template>
   <span class="tooltip">
     <slot name="target"></slot>
-    <div class="wrap" :style="style" v-el:wrap>
-      <div class="arrow {{dir}}"></div>
+    <div class="wrap" :style="style" ref="wrap">
+      <div :class="'arrow ' + dir"></div>
       <div class="content">
         <slot name="content"></slot>
       </div>
@@ -78,6 +78,7 @@ export default {
         left: 0,
         visibility: 'hidden',
       },
+      show: false,
       dir: false,
     }
   },
@@ -92,16 +93,12 @@ export default {
     },
     target: {
       type: Element,
-      default: false,
-    },
-    show: {
-      type: Boolean,
-      default: false,
+      default: null,
     },
   },
-  ready() {
-    var parent = this.target !== false ? this.target : this.$el
-    var tlpPos = new TooltipPosition(parent, this.$els.wrap)
+  mounted() {
+    var parent = this.target !== null ? this.target : this.$el
+    var tlpPos = new TooltipPosition(parent, this.$refs.wrap)
     var arrowSpace = 10
 
     var dhover = new DelayHover(parent, {
@@ -149,10 +146,10 @@ export default {
   },
   watch: {
     show: {
+      immediate: true,
       handler() {
         this.style.visibility = this.show ? 'visible' : 'hidden'
       },
-      immediate: true,
     },
   },
 }

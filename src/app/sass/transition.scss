@@ -1,35 +1,19 @@
-.expand-y-transition {
-  transition: all .3s ease;
-  transform: scaleY(1);
+.expand-y-enter-active,
+.expand-y-leave-active,
+{
+  transition: transform .3s ease;
 }
 
-.expand-y-enter,
-.expand-y-leave,
-{
+.expand-y-enter, .expand-y-leave-active {
   transform: scaleY(0);
 }
 
-.expand-x-transition {
-  transition: all .3s ease;
-  transform: scaleX(1);
-}
-
-.expand-x-enter,
-.expand-x-leave,
+.modal-enter-active,
+.modal-leave-active,
 {
-  transform: scaleX(0);
+  @extend .expand-y-enter-active;
 }
 
-.modal-transition {
-  .modal {
-    @extend .expand-y-transition;
-  }
-}
-
-.modal-enter,
-.modal-leave,
-{
-  .modal {
-    @extend .expand-y-transition;
-  }
+.modal-enter, .modal-leave-active {
+  @extend .expand-y-enter;
 }

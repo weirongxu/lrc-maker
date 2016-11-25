@@ -14,12 +14,13 @@
 </style>
 
 <script>
-import {cache, timestamp2timestr} from './utils'
+import {timestamp2timestr} from './utils'
+import cache from './cache'
 
 export default {
   data() {
     return {
-      remain: cache.get('time-remain', false),
+      remain: cache.timeRemain,
     }
   },
   props: {
@@ -39,9 +40,8 @@ export default {
   },
   watch: {
     remain(val) {
-      cache.set('time-remain', val)
+      cache.timeRemain = val
     },
   },
-  replace: false,
 }
 </script>

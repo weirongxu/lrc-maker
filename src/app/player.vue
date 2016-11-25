@@ -11,19 +11,21 @@
       <div class="ctrl-btn" title="[RIGHT]" @click="$emit('forward')">
         <i class="icon-forward"></i>
       </div>
-      <range class="music" :value="process" @seek="seek"></range>
+      <range class="range music" :value="process" @seek="seek" ref="musicRange"></range>
       <time-panel v-if="!isMobile" :duration="duration" :current-time="currentTime"></time-panel>
     </div>
-    <div class="more" v-show="isMobile || hover" transition="expand-y">
-      <time-panel v-if="isMobile" :duration="duration" :current-time="currentTime"></time-panel>
-      <div class="sound">
-        <div class="ctrl-btn" @click="muted = !muted">
-          <i v-if="muted || volume == 0" class="icon-volume-off"></i>
-          <i v-else class="icon-volume-up"></i>
+    <transition name="expand-y">
+      <div class="more" v-show="isMobile || hover">
+        <time-panel v-if="isMobile" :duration="duration" :current-time="currentTime"></time-panel>
+        <div class="sound">
+          <div class="ctrl-btn" @click="muted = !muted">
+            <i v-if="muted || volume == 0" class="icon-volume-off"></i>
+            <i v-else class="icon-volume-up"></i>
+          </div>
+          <range class="range volume" :value="volume" @seek="volumeSeek" @drag-seek="volumeSeek" ref="soundRange"></range>
         </div>
-        <range class="volume" :value="volume" @seek="volume_seek" @drag-seek="volume_seek"></range>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -61,13 +63,13 @@ $line-height: 30px;
   padding: 0 1px;
 }
 
-range {
-  padding: 0 5px;
+.range {
+  margin-left: 4px;
+  margin-right: 4px;
 }
 
-range.music {
+.range.music {
   flex: 1;
-  margin-left: 4px;
 }
 
 time-panel {
@@ -89,7 +91,7 @@ time-panel {
   @extend %flex;
   padding: 0 5px;
   width: 30%;
-  range.volume {
+  .range.volume {
     flex: 1;
   }
   .ctrl-mute-btn {
@@ -117,19 +119,14 @@ export default {
       currentTime: 0,
       duration: 0,
       volume: 0,
+      src: ''
     }
-  },
-  props: {
-    src: {
-      type: String,
-      default: '',
-    },
   },
   methods: {
     seek(percent) {
       this.playto(parseFloat(percent * this.audio.duration))
     },
-    volume_seek(percent) {
+    volumeSeek(percent) {
       this.audio.volume = this.volume = percent
     },
     playto(time) {
@@ -139,10 +136,10 @@ export default {
       }
     },
   },
-  ready() {
+  mounted() {
     this.audio = document.createElement('video')
     this.audio.addEventListener('durationchange', () => {
-      this.$emit('durationchange', this.audio.duration)
+      this.duration = this.audio.duration
     })
     // TODO on progress
     this.audio.addEventListener('timeupdate', () => {
@@ -178,9 +175,6 @@ export default {
     })
   },
   events: {
-    durationchange(duration) {
-      this.duration = duration
-    },
     backward() {
       this.playto(this.audio.currentTime - 5)
     },
@@ -195,14 +189,25 @@ export default {
     },
   },
   watch: {
-    src(val) {
-      this.paused = true
-      this.audio.src = val
-      this.audio.preload = 'metadata'
-      this.process = 0
-      this.volume = this.audio.volume
-      this.currentTime = this.audio.currentTime
-      this.duration = this.audio.duration
+    src: {
+      immediate: true,
+      handler(src) {
+        if (src) {
+          this.paused = true
+          this.audio.src = src
+          this.audio.preload = 'metadata'
+          this.process = 0
+          this.volume = this.audio.volume
+          this.currentTime = this.audio.currentTime
+          this.duration = this.audio.duration
+        }
+      },
+    },
+    process(val) {
+      this.$refs.musicRange.changeValue(this.process)
+    },
+    volume(val) {
+      this.$refs.soundRange.changeValue(this.volume)
     },
     muted(val) {
       this.audio.muted = val
@@ -219,6 +224,5 @@ export default {
     Range,
     TimePanel,
   },
-  replace: false,
 }
 </script>

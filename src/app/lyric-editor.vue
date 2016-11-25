@@ -1,7 +1,7 @@
 <template>
   <ul v-if="editing" class="editing lyrics">
     <li
-      v-for="(i, lyric) in runner.lrc.lyrics"
+      v-for="(lyric, i) in runner.lrc.lyrics"
       :title="lyric.timestamp"
       :class="{cur: i == index}"
       @dblclick="edit(i)"
@@ -15,7 +15,7 @@
         <div class="timestamp">{{lyric.timestamp | time}}</div>
         <div class="content">{{lyric.content}}</div>
         <div class="icon-btn conceal">
-          <menu>
+          <tmenu>
             <div slot="target">
               <i class="icon-ellipsis-vert"></i>
             </div>
@@ -36,25 +36,25 @@
                 <i class="icon-trash"></i> {{ $t('lyric_editor.remove') }}
               </li>
             </ul>
-          </menu>
+          </tmenu>
         </div>
       </template>
     </li>
-    <li v-if="textLyrics.length" class="division">{{ $t('lyric_editor.following_unsorted') }}</li>
+    <li v-if="lyricArray.length" class="division">{{ $t('lyric_editor.following_unsorted') }}</li>
     <li
-      v-for="(i, lyric) in textLyrics"
-      track-by="$index"
+      v-for="(lyric, i) in lyricArray"
+      track-by="i"
       class="unsorted"
       @dblclick="editText(i)"
       @contextmenu.prevent="editMenu(i)"
     >
       <template v-if="editingTextIndex == i">
-        <input class="content" type="text" v-model="lyric" @keydown.enter="exitEdit"/>
+        <input class="content" type="text" v-model="lyricArray[i]" @keydown.enter="exitEdit"/>
       </template>
       <template v-else>
         <div class="content">{{lyric}}</div>
         <div class="icon-btn conceal">
-          <menu>
+          <tmenu>
             <div slot="target">
               <i class="icon-ellipsis-vert"></i>
             </div>
@@ -72,24 +72,24 @@
                 <i class="icon-trash"></i> {{ $t('lyric_editor.remove') }}
               </li>
             </ul>
-          </menu>
+          </tmenu>
         </div>
       </template>
     </li>
   </ul>
   <ul v-else class="lyrics">
     <li
-      v-for="(i, lyric) in runner.lrc.lyrics"
+      v-for="(lyric, i) in runner.lrc.lyrics"
       @click="playto(lyric.timestamp)"
       :title="lyric.timestamp"
       :class="{cur: i == index}"
     >
       {{lyric.content}}
     </li>
-    <li v-if="textLyrics.length" class="division">{{ $t('lyric_editor.following_unsorted') }}</li>
+    <li v-if="lyricArray.length" class="division">{{ $t('lyric_editor.following_unsorted') }}</li>
     <li
-      v-for="(i, lyric) in textLyrics"
-      track-by="$index"
+      v-for="(lyric, i) in lyricArray"
+      track-by="i"
       class="unsorted"
     >
       {{lyric}}
@@ -179,8 +179,9 @@ ul.lyrics {
 
 <script>
 import {Runner} from 'lrc-kit'
-import {Scroller, cache, globalKeydown, timestamp2timestr} from './utils'
-import Menu from './menu'
+import {Scroller, globalKeydown, timestamp2timestr} from './utils'
+import cache from './cache'
+import Tmenu from './tmenu'
 
 export default {
   data() {
@@ -202,9 +203,9 @@ export default {
     },
     editing: {
       type: Boolean,
-      default: cache.get('editing'),
+      default: cache.editing,
     },
-    textLyrics: {
+    lyricArray: {
       type: Array,
       default: [],
     },
@@ -223,28 +224,33 @@ export default {
     },
     editText(index) {
       this.editingTextIndex = index
+      this.$emit('update')
     },
     remove(index) {
       this.runner.lrc.lyrics.splice(index, 1)
+      this.$emit('update')
     },
     removeText(index) {
-      this.textLyrics.splice(index, 1)
+      this.lyricArray.splice(index, 1)
+      this.$emit('update')
     },
     insert(index) {
       this.runner.lrc.lyrics.splice(index+1, 0, {
         timestamp: this.runner.lrc.lyrics[index].timestamp,
         content: this.runner.lrc.lyrics[index].content,
       })
+      this.$emit('update')
     },
     insertText(index) {
-      this.textLyrics.splice(index+1, 0, this.textLyrics[index])
+      this.lyricArray.splice(index+1, 0, this.lyricArray[index])
+      this.$emit('update')
     },
     removeTimestamp(index) {
       var lyrics = this.runner.lrc.lyrics
       var removeLyrics = lyrics
       .splice(index, lyrics.length - index)
       .map((lyric) => { return lyric.content })
-      this.textLyrics.splice(0, 0, ...removeLyrics)
+      this.lyricArray.splice(0, 0, ...removeLyrics)
       this.$emit('update')
     },
     setTimestamp(index) {
@@ -256,10 +262,10 @@ export default {
     },
     setTimestampText(index) {
       var currentTime = this.$parent.$refs.player.currentTime
-      if (currentTime !== 0 && this.textLyrics.length) {
+      if (currentTime !== 0 && this.lyricArray.length) {
         this.runner.lrc.lyrics.push({
           timestamp: currentTime,
-          content: this.textLyrics[index],
+          content: this.lyricArray[index],
         })
         this.removeText(index)
         this.$emit('update')
@@ -278,7 +284,22 @@ export default {
   filters: {
     time: timestamp2timestr,
   },
-  ready() {
+  created() {
+    this.$on('timeupdate', (timestamp) => {
+      this.runner.timeUpdate(timestamp)
+      this.index = this.runner.curIndex()
+      this.scrollToCurrentLyric()
+    }).$on('update', () => {
+      this.runner.lrcUpdate()
+      $App.lrcFormat = this.runner.lrc.toString()
+      $App.lyricArray = this.lyricArray
+    }).$on('prevlyric', () => {
+      this.removeTimestamp(this.runner.lrc.lyrics.length - 1)
+    }).$on('nextlyric', () => {
+      this.setTimestampText(0)
+    })
+  },
+  mounted() {
     this.scroller = new Scroller(this.$el)
 
     globalKeydown
@@ -301,22 +322,6 @@ export default {
       }
     })
   },
-  events: {
-    timeupdate(timestamp) {
-      this.runner.timeUpdate(timestamp)
-      this.index = this.runner.curIndex()
-      this.scrollToCurrentLyric()
-    },
-    update() {
-      this.runner.lrcUpdate()
-    },
-    prevlyric() {
-      this.removeTimestamp(this.runner.lrc.lyrics.length - 1)
-    },
-    nextlyric() {
-      this.setTimestampText(0)
-    },
-  },
   watch: {
     editing() {
       if (! this.editing) {
@@ -325,8 +330,7 @@ export default {
     },
   },
   components: {
-    Menu,
+    Tmenu,
   },
-  replace: false,
 }
 </script>

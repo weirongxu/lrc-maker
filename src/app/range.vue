@@ -1,9 +1,9 @@
 <template>
-  <div class="bar" @click="click" v-el:bar>
+  <div class="bar" @click="click" ref="bar">
     <div class="wrap">
-      <div class="value" :style="{width: self_value*100 + '%'}"></div>
+      <div class="value" :style="{width: selfValue*100 + '%'}"></div>
     </div>
-    <div class="thumb" :style="{left: self_value*100 + '%'}" v-el:thumb></div>
+    <div class="thumb" :style="{left: selfValue*100 + '%'}" ref="thumb"></div>
   </div>
 </template>
 
@@ -52,7 +52,7 @@ import {Dragger} from './utils'
 export default {
   data() {
     return {
-      self_value: 0,
+      selfValue: 0,
       draging: false,
       dragValue: 0,
     }
@@ -68,25 +68,30 @@ export default {
   },
   methods: {
     click(event) {
-      if (event.target === this.$els.thumb) {
+      if (event.target === this.$refs.thumb) {
         return
       }
-      this.self_value = this.offset2value(event.offsetX)
+      this.selfValue = this.offset2value(event.offsetX)
       this.emitSeek()
     },
     emitSeek() {
-      this.$emit('seek', this.self_value)
+      this.$emit('seek', this.selfValue)
     },
     emitDragSeek() {
-      this.$emit('drag-seek', this.self_value)
+      this.$emit('drag-seek', this.selfValue)
     },
     offset2value(offset) {
-      return offset / this.$els.bar.clientWidth
+      return offset / this.$refs.bar.clientWidth
     },
+    changeValue(value) {
+      if (! this.draging) {
+        this.selfValue = value
+      }
+    }
   },
-  ready() {
-    var thumb = this.$els.thumb
-    var bar = this.$els.bar
+  mounted() {
+    var thumb = this.$refs.thumb
+    var bar = this.$refs.bar
 
     var dragger = new Dragger(thumb, bar)
     dragger
@@ -94,31 +99,15 @@ export default {
       this.draging = true
     })
     .on('move', () => {
-      this.self_value = this.offset2value(dragger.offset)
+      this.selfValue = this.offset2value(dragger.offset)
       this.emitDragSeek()
     })
     .on('end', () => {
       this.draging = false
-      this.self_value = this.offset2value(dragger.offset)
+      this.selfValue = this.offset2value(dragger.offset)
       this.emitSeek()
     })
     dragger.create()
   },
-  events: {
-    move(value) {
-      if (! this.draging) {
-        this.self_value = value
-      }
-    },
-  },
-  watch: {
-    value: {
-      handler() {
-        this.$emit('move', this.value)
-      },
-      immediate: true,
-    }
-  },
-  replace: false,
 }
 </script>

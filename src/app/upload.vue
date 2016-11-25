@@ -2,7 +2,7 @@
   <div @click="upload">
     <i class="icon-upload"></i>
     <slot></slot>
-    <input type="file" :accept="accept" v-el:upload />
+    <input type="file" :accept="accept" ref="upload" />
   </div>
 </template>
 
@@ -14,8 +14,8 @@ input[type="file"] {
 
 <script>
 export default {
-  ready: function() {
-    var upload = this.$els.upload
+  mounted: function() {
+    var upload = this.$refs.upload
     upload.addEventListener('change', () => {
       var reader = new FileReader()
       reader.onload = (event) => {
@@ -41,12 +41,12 @@ export default {
   },
   methods: {
     upload() {
-      this.$els.upload.click()
+      this.$refs.upload.click()
     },
     type_match() {
       if (this.type) {
         var match = new RegExp(`^${this.type}/`)
-        return match.test(this.$els.upload.files[0].type)
+        return match.test(this.$refs.upload.files[0].type)
       } else {
         return true
       }

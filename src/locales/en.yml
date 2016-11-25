@@ -12,12 +12,12 @@ button:
 
 menu:
   upload:
-    lrc: LRC
+    lrc: LRC format lyric
     lyric: lyric text
     music: music
 
 modal:
-  lyric_save:
+  lrc_format_save:
     title: Lyrics Save
     info_title: Lyrics Info
     fields:
@@ -29,14 +29,14 @@ modal:
     save_title: Lyrics
     combine: combine lyrics
     download: lyrics file download
-  lrc_upload:
-    title: LRC upload
+  lrc_format_upload:
+    title: Upload LRC Format
     description: Upload timestamped lyrics
-    upload: upload by file
+    upload: Read from file
   lyric_upload:
     title: Upload Text Lyrics
     description: Plain Text lyrics, lyrics divided by a newline
-    upload: upload by file
+    upload: Read from file
   help:
     title: Help
     shortcut_key: shortcut key

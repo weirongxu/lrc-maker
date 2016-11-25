@@ -1,8 +1,14 @@
 <template>
-  <div class="menu" v-el:menu>
-    <tooltip :dir="dir" :target="$els.menu" :enter-delay="0">
-      <slot name="target" slot="target"></slot>
-      <slot name="list" slot="content"></slot>
+  <div class="menu" ref="menu">
+    <tooltip :dir="dir" :target="$refs.menu" :enter-delay="0">
+      <div slot="target">
+        <slot name="target">
+        </slot>
+      </div>
+      <div slot="content">
+        <slot name="list">
+        </slot>
+      </div>
     </tooltip>
   </div>
 </template>
@@ -49,12 +55,6 @@ export default {
     return {
       dir: false,
     }
-  },
-  props: {
-    show: {
-      type: Boolean,
-      default: false,
-    },
   },
   components: {
     Tooltip,

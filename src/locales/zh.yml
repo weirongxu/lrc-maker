@@ -12,12 +12,12 @@ button:
 
 menu:
   upload:
-    lrc: LRC
+    lrc: LRC格式歌词
     lyric: 歌词文本
     music: 音乐
 
 modal:
-  lyric_save:
+  lrc_format_save:
     title: 保存歌词
     info_title: 歌词信息
     fields:
@@ -29,14 +29,14 @@ modal:
     save_title: 歌词
     combine: 合并歌词
     download: 下载歌词文件
-  lrc_upload:
-    title: LRC上传
+  lrc_format_upload:
+    title: 上传LRC格式文本
     description: 上传已经包含时间戳的歌词
-    upload: 通过文件上传
+    upload: 从文件读取
   lyric_upload:
     title: 上传歌词文本
     description: 纯文本歌词，用换行对歌词划分
-    upload: 通过文件上传
+    upload: 从文件读取
   help:
     title: 帮助
     shortcut_key: 快捷键
