@@ -7,7 +7,7 @@
             <i class="icon-upload"></i>
           </div>
           <ul slot="list">
-            <li @click="$refs.modals.show('lrc-upload')">
+            <li @click="$refs.modals.show('lrc-format-upload')">
               <i class="icon-upload"></i> {{ $t('menu.upload.lrc') }}
             </li>
             <li @click="$refs.modals.show('lyric-upload')">

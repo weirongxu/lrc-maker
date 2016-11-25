@@ -8,6 +8,18 @@
   transform: scaleY(0);
 }
 
+.player-more-enter-active,
+.player-more-leave-active,
+{
+  transform-origin: center top;
+  @extend .expand-y-enter-active;
+}
+
+.player-more-enter, .player-more-leave-active {
+  transform-origin: center top;
+  @extend .expand-y-enter;
+}
+
 .modal-enter-active,
 .modal-leave-active,
 {

@@ -14,7 +14,7 @@
       <range class="range music" :value="process" @seek="seek" ref="musicRange"></range>
       <time-panel v-if="!isMobile" :duration="duration" :current-time="currentTime"></time-panel>
     </div>
-    <transition name="expand-y">
+    <transition name="player-more">
       <div class="more" v-show="isMobile || hover">
         <time-panel v-if="isMobile" :duration="duration" :current-time="currentTime"></time-panel>
         <div class="sound">

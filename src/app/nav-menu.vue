@@ -24,7 +24,8 @@
 .nav-menu {
   .wrap {
     position: absolute;
-    box-shadow: 4px 4px 8px 0.5px #ccc;
+    z-index: 100;
+    box-shadow: 4px 4px 3px -2px #ccc;
     ul {
       list-style-type: none;
       padding: 0;

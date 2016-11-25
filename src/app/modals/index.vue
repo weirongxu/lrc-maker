@@ -141,13 +141,13 @@ $primary-color: #4F99E4;
   import Vue from 'vue'
   import {globalKeydown} from '../utils'
   import Help from './help'
-  import LrcUpload from './lrc-upload'
+  import LrcFormatUpload from './lrc-format-upload'
   import LyricUpload from './lyric-upload'
   import LrcSave from './lrc-save'
 
   var COMPONENTS = {
     'help': Help,
-    'lrc-upload': LrcUpload,
+    'lrc-format-upload': LrcFormatUpload,
     'lyric-upload': LyricUpload,
     'lrc-save': LrcSave,
   }
@@ -208,7 +208,7 @@ $primary-color: #4F99E4;
     },
     components: {
       Help,
-      LrcUpload,
+      LrcFormatUpload,
       LyricUpload,
       LrcSave,
     },
