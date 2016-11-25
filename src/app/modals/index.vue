@@ -1,8 +1,6 @@
 <template>
-  <div class="wrapper">
-    <div v-show="isShow" class="cover" @click="cancel">
-    </div>
-    <transition name="modal">
+  <div :class="{cover: coverShow}" @click="cancel">
+    <transition name="modal" @after-leave="coverShow = false">
       <div v-if="isShow" class="modal" :class="[size]" @click.stop>
         <div class="header">
           {{title}}
@@ -31,21 +29,15 @@ $primary-color: #4F99E4;
   position: fixed;
   top: 0;
   left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
   overflow: auto;
 }
 
-.wrapper {
-  z-index: 1000;
-}
-
 .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: relative;
   margin: 30px auto;
 
   &.lg {
@@ -163,20 +155,19 @@ $primary-color: #4F99E4;
         modalName: '',
         modalComponent: null,
         isShow: false,
+        coverShow: false,
       }
     },
     methods: {
       show(modalName) {
         this.isShow = true
+        this.coverShow = true
         this.$nextTick(() => {
           this.modalName = modalName
           this.modalComponent = new Vue({
             ...COMPONENTS[this.modalName]
           })
           this.modalComponent.$mount(this.$refs.modalWrapper)
-          // this.$refs.modalWrapper.innerHTML = ''
-          // this.$refs.modalWrapper.appendChild(document.createElement('div'))
-          // this.modalComponent.$mount(this.$refs.modalWrapper.querySelector('div'))
 
           if (this.modalComponent.title)
             this.title = this.modalComponent.title
