@@ -163,11 +163,11 @@ export default {
       this.paused = !this.paused
       return false
     })
-    .on('arrowleft', (event) => {
+    .on('arrowleft', () => {
       this.$emit('backward')
       return false
     })
-    .on('arrowright', (event) => {
+    .on('arrowright', () => {
       this.$emit('forward')
       return false
     })
@@ -196,10 +196,10 @@ export default {
       },
     },
     process(val) {
-      this.$refs.musicRange.changeValue(this.process)
+      this.$refs.musicRange.changeValue(val)
     },
     volume(val) {
-      this.$refs.soundRange.changeValue(this.volume)
+      this.$refs.soundRange.changeValue(val)
     },
     muted(val) {
       this.audio.muted = val

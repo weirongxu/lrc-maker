@@ -3,7 +3,7 @@
 Make LRC online
 
 ## TODO
-- [ ] menu click outer
+- [ ] vuex
 - [ ] accelerated play, deceleration play
 - [ ] lyrics chronological interval
 - [ ] drag and drop for lrc list

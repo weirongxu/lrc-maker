@@ -8,7 +8,6 @@
 
 <script>
   import Upload from '../upload'
-  import {Lrc, Runner} from 'lrc-kit'
 
   export default {
     data() {
@@ -27,10 +26,6 @@
     methods: {
       upload(lyric) {
         this.lyric = lyric
-      },
-    },
-    watch: {
-      lyric(val) {
       },
     },
     components: {

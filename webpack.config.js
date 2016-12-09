@@ -50,6 +50,13 @@ module.exports = {
       },
     ]
   },
+  vue: {
+    postcss: [
+      require('autoprefixer')({
+        browsers: ['last 2 versions']
+      }),
+    ],
+  },
   resolve: {
     extensions: ['', '.js', '.vue', '.yml', '.scss'],
   },

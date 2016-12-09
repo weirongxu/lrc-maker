@@ -3,7 +3,7 @@
     <h3>{{ $t('modal.lrc_format_save.info_title') }}</h3>
     <div class="form-group" v-for="field in infoFields" v-if="field.label">
       <label :for="'info-' + field.key" v-text="field.label"></label>
-      <input :id="'info-' + field.key" type="text" v-model="runner.lrc.info[field.key]" />
+      <input :id="'info-' + field.key" type="text" v-model="info[field.key]" />
     </div>
     <div class="form-group">
       <label for="info-by">{{ $t('modal.lrc_format_save.fields.lrc_creator') }}</label>
@@ -56,19 +56,29 @@
             label: this.$t('modal.lrc_format_save.fields.songtext_creator'),
           },
         ],
+        info: {},
       }
     },
-    created() {
+    mounted() {
       this.runner = $App.runner
       let player = $App.$refs.player
+      let info = {}
 
-      this.runner.lrc.info.re = `${PKG.name} (${PKG.onlinePage})`
-      this.runner.lrc.info.ve = PKG.version
-
+      this.infoFields.forEach((field) => {
+        if (field.key in this.runner.lrc.info) {
+          info[field.key] = this.runner.lrc.info[field.key]
+        } else {
+          info[field.key] = ''
+        }
+      })
       if (player.duration)
-        this.runner.lrc.info.length = timestamp2timestr(player.duration)
+        info.length = timestamp2timestr(player.duration)
       if (this.userName)
-        this.runner.lrc.info.by = this.userName
+        info.by = this.userName
+      info.re = `${PKG.name} (${PKG.onlinePage})`
+      info.ve = PKG.version
+
+      this.info = info
 
       this.lyricUpdate()
     },
@@ -76,20 +86,23 @@
       save() {
         saveLrc(this.runner.lrc.toString(this.saveOptions), this.runner.lrc.info.ti || 'lyric')
       },
-      lyricUpdate() {
-        this.lyric = this.runner.lrc.toString(this.saveOptions)
-      },
-      cleanEmptyInfo() {
-        for(var key in this.runner.lrc.info) {
-          if (this.runner.lrc.info[key].length == 0) {
+      infoUpdate() {
+        for (var key in this.info) {
+          if (this.info[key].length !== 0) {
+            this.runner.lrc.info[key] = this.info[key]
+          } else {
             delete this.runner.lrc.info[key]
           }
         }
-      }
+        this.lyricUpdate()
+      },
+      lyricUpdate() {
+        this.lyric = this.runner.lrc.toString(this.saveOptions)
+      },
     },
     watch: {
       userName(name) {
-        this.$set(this.runner, 'runner.lrc.info.by', name)
+        this.$set(this.info, 'by', name)
         cache.userName = name
       },
       lyric(){
@@ -101,11 +114,11 @@
           this.lyricUpdate()
         },
       },
-      'runner.lrc.info': {
+      info: {
         deep: true,
         handler() {
-          this.cleanEmptyInfo()
-          this.lyricUpdate()
+          console.log('info')
+          this.infoUpdate()
         },
       },
     },

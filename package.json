@@ -1,6 +1,6 @@
 {
   "name": "lrc-maker",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "lrc maker",
   "main": "index.js",
   "scripts": {

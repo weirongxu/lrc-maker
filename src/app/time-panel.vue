@@ -1,13 +1,15 @@
 <template>
-  <span @click="remain = !remain">
-    <template v-if="remain">
-      -{{(duration - currentTime) | time}}
-    </template>
-    <template v-else>
-      {{currentTime | time}}
-    </template>
-  </span>
-  / {{duration | time}}
+  <div>
+    <span @click="remain = !remain">
+      <template v-if="remain">
+        -{{(duration - currentTime) | time}}
+      </template>
+      <template v-else>
+        {{currentTime | time}}
+      </template>
+    </span>
+    / {{duration | time}}
+  </div>
 </template>
 
 <style lang="sass">
