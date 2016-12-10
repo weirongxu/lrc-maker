@@ -16,8 +16,8 @@
 </style>
 
 <script>
-import {timestamp2timestr} from './utils'
-import cache from './cache'
+import {timestamp2timestr} from '../utils'
+import cache from '../cache'
 
 export default {
   data() {

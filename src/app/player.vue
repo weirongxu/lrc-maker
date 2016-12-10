@@ -105,7 +105,7 @@ time-panel {
 <script>
 import Range from './range'
 import TimePanel from './time-panel'
-import {globalKeydown, isMobile} from './utils'
+import {globalKeydown, isMobile} from '../utils'
 
 export default {
   data() {

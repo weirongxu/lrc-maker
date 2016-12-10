@@ -8,7 +8,7 @@
 
 <script>
   import Upload from '../upload'
-  import cache from '../cache'
+  import cache from '../../cache'
 
   export default {
     data() {
@@ -20,7 +20,7 @@
     },
     created() {
       this.$on('ok', () => {
-        $App.lyricArray = this.lyric.split(/\r\n|[\n\r]/g)
+        this.$App.lyricArray = this.lyric.split(/\r\n|[\n\r]/g)
       })
     },
     methods: {

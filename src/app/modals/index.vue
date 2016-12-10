@@ -131,7 +131,7 @@ $primary-color: #4F99E4;
 
 <script>
   import Vue from 'vue'
-  import {globalKeydown} from '../utils'
+  import {globalKeydown} from '../../utils'
   import Help from './help'
   import LrcFormatUpload from './lrc-format-upload'
   import LyricUpload from './lyric-upload'

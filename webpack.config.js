@@ -8,13 +8,13 @@ module.exports = {
     path: './build/assets/',
   },
   module: {
-    // preLoaders: [
-    //   {
-    //     test: /\.(vue|js)$/,
-    //     loader: 'eslint',
-    //     exclude: /(node_modules|bower_components)/,
-    //   },
-    // ],
+    preLoaders: [
+      {
+        test: /\.(vue|js)$/,
+        loader: 'eslint',
+        exclude: /(node_modules|bower_components)/,
+      },
+    ],
     loaders: [
       {
         test: /\.(woff|woff2|ttf|eot|svg)(\?[\s\S]+)?$/,

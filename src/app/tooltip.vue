@@ -67,7 +67,7 @@
 </style>
 
 <script>
-import {DelayHover, TooltipPosition} from './utils'
+import {DelayHover, TooltipPosition} from '../utils'
 import extend from 'extend'
 
 export default {

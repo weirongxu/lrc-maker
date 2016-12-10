@@ -190,7 +190,7 @@ header, footer {
   // import Menu from './menu'
   import NavMenu from './nav-menu'
   import {Lrc, Runner} from 'lrc-kit'
-  import cache from './cache'
+  import cache from '../cache'
 
   export default {
     data() {
@@ -204,9 +204,6 @@ header, footer {
         runner: new Runner(Lrc.parse(lrcFormat)),
         lyricArray: cache.lyricArray
       }
-    },
-    created() {
-      window.$App = this
     },
     methods: {
       uploadMusic(music) {

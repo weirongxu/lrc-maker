@@ -18,9 +18,9 @@
       }
     },
     created() {
-      this.lyric = $App.lrcFormat
+      this.lyric = this.$App.lrcFormat
       this.$on('ok', () => {
-        $App.lrcFormat = this.lyric
+        this.$App.lrcFormat = this.lyric
       })
     },
     methods: {

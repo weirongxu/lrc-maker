@@ -1,10 +1,11 @@
-{
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "sourceType": "module",
+module.exports = {
+  root: true,
+  parser: 'babel-eslint',
+  parserOptions: {
+    sourceType: 'module',
   },
-  "plugins": [
-    "html"
+  plugins: [
+    'html'
   ],
   "rules": {
     "strict": 0,

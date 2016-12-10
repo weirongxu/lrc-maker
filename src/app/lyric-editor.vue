@@ -179,8 +179,8 @@ ul.lyrics {
 
 <script>
 import {Runner} from 'lrc-kit'
-import {Scroller, globalKeydown, timestamp2timestr} from './utils'
-import cache from './cache'
+import {Scroller, globalKeydown, timestamp2timestr} from '../utils'
+import cache from '../cache'
 import Tmenu from './tmenu'
 
 export default {
@@ -291,8 +291,8 @@ export default {
       this.scrollToCurrentLyric()
     }).$on('update', () => {
       this.runner.lrcUpdate()
-      $App.lrcFormat = this.runner.lrc.toString()
-      $App.lyricArray = this.lyricArray
+      this.$App.lrcFormat = this.runner.lrc.toString()
+      this.$App.lyricArray = this.lyricArray
     }).$on('prevlyric', () => {
       this.removeTimestamp(this.runner.lrc.lyrics.length - 1)
     }).$on('nextlyric', () => {

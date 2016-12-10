@@ -23,8 +23,8 @@
 </template>
 
 <script>
-  import {saveLrc, timestamp2timestr} from '../utils'
-  import cache from '../cache'
+  import {saveLrc, timestamp2timestr} from '../../utils'
+  import cache from '../../cache'
   import PKG from '../../../package.json'
 
   export default {
@@ -60,8 +60,8 @@
       }
     },
     mounted() {
-      this.runner = $App.runner
-      let player = $App.$refs.player
+      this.runner = this.$App.runner
+      let player = this.$App.$refs.player
       let info = {}
 
       this.infoFields.forEach((field) => {
@@ -106,7 +106,7 @@
         cache.userName = name
       },
       lyric(){
-        $App.lrcFormat = this.lyric
+        this.$App.lrcFormat = this.lyric
       },
       saveOptions: {
         deep: true,
@@ -117,7 +117,6 @@
       info: {
         deep: true,
         handler() {
-          console.log('info')
           this.infoUpdate()
         },
       },

@@ -47,7 +47,7 @@ $root-height: 10px;
 </style>
 
 <script>
-import {Dragger} from './utils'
+import {Dragger} from '../utils'
 
 export default {
   data() {

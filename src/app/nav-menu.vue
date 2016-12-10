@@ -46,7 +46,7 @@
 </style>
 
 <script>
-import {DelayHover} from './utils'
+import {DelayHover} from '../utils'
 
 export default {
   data() {
