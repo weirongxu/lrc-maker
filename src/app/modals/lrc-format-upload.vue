@@ -10,21 +10,21 @@
   import Upload from '../upload'
 
   export default {
-    data() {
+    data () {
       return {
         title: this.$t('modal.lrc_format_upload.title'),
         lyric: '',
         confirm: true,
       }
     },
-    created() {
+    created () {
       this.lyric = this.$App.lrcFormat
       this.$on('ok', () => {
         this.$App.lrcFormat = this.lyric
       })
     },
     methods: {
-      upload(lyric) {
+      upload (lyric) {
         this.lyric = lyric
       },
     },

@@ -147,7 +147,7 @@ $primary-color: #4F99E4;
   window.MC = []
 
   export default {
-    data() {
+    data () {
       return {
         title: 'Modal',
         size: 'md',
@@ -159,7 +159,7 @@ $primary-color: #4F99E4;
       }
     },
     methods: {
-      show(modalName) {
+      show (modalName) {
         this.isShow = true
         this.coverShow = true
         this.$nextTick(() => {
@@ -169,28 +169,31 @@ $primary-color: #4F99E4;
           })
           this.modalComponent.$mount(this.$refs.modalWrapper)
 
-          if (this.modalComponent.title)
+          if (this.modalComponent.title) {
             this.title = this.modalComponent.title
-          if (this.modalComponent.size)
+          }
+          if (this.modalComponent.size) {
             this.title = this.modalComponent.size
-          if (this.modalComponent.confirm)
+          }
+          if (this.modalComponent.confirm) {
             this.confirm = this.modalComponent.confirm
+          }
         })
 
         return this
       },
-      ok() {
+      ok () {
         this.isShow = false
         this.modalComponent.$emit('ok')
         this.modalComponent.$destroy()
       },
-      cancel() {
+      cancel () {
         this.isShow = false
         this.modalComponent.$emit('cancel')
         this.modalComponent.$destroy()
       },
     },
-    mounted() {
+    mounted () {
       globalKeydown.on('escape', () => {
         if (this.isShow) {
           this.cancel()

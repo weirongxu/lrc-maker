@@ -108,7 +108,7 @@ import TimePanel from './time-panel'
 import {globalKeydown, isMobile} from '../utils'
 
 export default {
-  data() {
+  data () {
     return {
       hover: false,
       isMobile: isMobile,
@@ -124,13 +124,13 @@ export default {
     }
   },
   methods: {
-    seek(percent) {
+    seek (percent) {
       this.playto(parseFloat(percent * this.audio.duration))
     },
-    volumeSeek(percent) {
+    volumeSeek (percent) {
       this.audio.volume = this.volume = percent
     },
-    playto(time) {
+    playto (time) {
       if (this.paused) {
         this.paused = false
       }
@@ -141,7 +141,7 @@ export default {
       })
     },
   },
-  mounted() {
+  mounted () {
     this.audio = document.createElement('video')
     this.audio.preload = 'metadata'
     this.audio.addEventListener('durationchange', () => {
@@ -172,7 +172,6 @@ export default {
       return false
     })
 
-
     this
       .$on('backward', () => {
         this.playto(this.audio.currentTime - 5)
@@ -184,7 +183,7 @@ export default {
   watch: {
     src: {
       immediate: true,
-      handler(src) {
+      handler (src) {
         if (src) {
           this.paused = true
           this.audio.src = src
@@ -195,16 +194,16 @@ export default {
         }
       },
     },
-    process(val) {
+    process (val) {
       this.$refs.musicRange.changeValue(val)
     },
-    volume(val) {
+    volume (val) {
       this.$refs.soundRange.changeValue(val)
     },
-    muted(val) {
+    muted (val) {
       this.audio.muted = val
     },
-    paused() {
+    paused () {
       if (this.paused) {
         this.audio.pause()
       } else {

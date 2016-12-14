@@ -50,7 +50,7 @@ $root-height: 10px;
 import {Dragger} from '../utils'
 
 export default {
-  data() {
+  data () {
     return {
       selfValue: 0,
       draging: false,
@@ -67,29 +67,29 @@ export default {
     },
   },
   methods: {
-    click(event) {
+    click (event) {
       if (event.target === this.$refs.thumb) {
         return
       }
       this.selfValue = this.offset2value(event.offsetX)
       this.emitSeek()
     },
-    emitSeek() {
+    emitSeek () {
       this.$emit('seek', this.selfValue)
     },
-    emitDragSeek() {
+    emitDragSeek () {
       this.$emit('drag-seek', this.selfValue)
     },
-    offset2value(offset) {
+    offset2value (offset) {
       return offset / this.$refs.bar.clientWidth
     },
-    changeValue(value) {
-      if (! this.draging) {
+    changeValue (value) {
+      if (!this.draging) {
         this.selfValue = value
       }
     }
   },
-  mounted() {
+  mounted () {
     var thumb = this.$refs.thumb
     var bar = this.$refs.bar
 

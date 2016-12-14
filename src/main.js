@@ -4,7 +4,7 @@ import './i18n'
 
 let root = new Vue({
   el: '#app',
-  render(h) {
+  render (h) {
     return h(App, {ref: 'app'})
   },
 })

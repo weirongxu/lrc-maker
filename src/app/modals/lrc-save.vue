@@ -28,7 +28,7 @@
   import PKG from '../../../package.json'
 
   export default {
-    data() {
+    data () {
       return {
         title: this.$t('modal.lrc_format_save.title'),
         lyric: '',
@@ -59,7 +59,7 @@
         info: {},
       }
     },
-    mounted() {
+    mounted () {
       this.runner = this.$App.runner
       let player = this.$App.$refs.player
       let info = {}
@@ -71,10 +71,12 @@
           info[field.key] = ''
         }
       })
-      if (player.duration)
+      if (player.duration) {
         info.length = timestamp2timestr(player.duration)
-      if (this.userName)
+      }
+      if (this.userName) {
         info.by = this.userName
+      }
       info.re = `${PKG.name} (${PKG.onlinePage})`
       info.ve = PKG.version
 
@@ -83,10 +85,10 @@
       this.lyricUpdate()
     },
     methods: {
-      save() {
+      save () {
         saveLrc(this.runner.lrc.toString(this.saveOptions), this.runner.lrc.info.ti || 'lyric')
       },
-      infoUpdate() {
+      infoUpdate () {
         for (var key in this.info) {
           if (this.info[key].length !== 0) {
             this.runner.lrc.info[key] = this.info[key]
@@ -96,27 +98,27 @@
         }
         this.lyricUpdate()
       },
-      lyricUpdate() {
+      lyricUpdate () {
         this.lyric = this.runner.lrc.toString(this.saveOptions)
       },
     },
     watch: {
-      userName(name) {
+      userName (name) {
         this.$set(this.info, 'by', name)
         cache.userName = name
       },
-      lyric(){
+      lyric () {
         this.$App.lrcFormat = this.lyric
       },
       saveOptions: {
         deep: true,
-        handler() {
+        handler () {
           this.lyricUpdate()
         },
       },
       info: {
         deep: true,
-        handler() {
+        handler () {
           this.infoUpdate()
         },
       },

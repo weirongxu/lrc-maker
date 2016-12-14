@@ -184,7 +184,7 @@ import cache from '../cache'
 import Tmenu from './tmenu'
 
 export default {
-  data() {
+  data () {
     return {
       index: -1,
       editingIndex: -1,
@@ -211,41 +211,41 @@ export default {
     },
   },
   methods: {
-    editMenu(index) {
+    editMenu (index) {
       // TODO
     },
-    exitEdit() {
+    exitEdit () {
       this.editingIndex = -1
       this.editingTextIndex = -1
       this.$emit('update')
     },
-    edit(index) {
+    edit (index) {
       this.editingIndex = index
     },
-    editText(index) {
+    editText (index) {
       this.editingTextIndex = index
       this.$emit('update')
     },
-    remove(index) {
+    remove (index) {
       this.runner.lrc.lyrics.splice(index, 1)
       this.$emit('update')
     },
-    removeText(index) {
+    removeText (index) {
       this.lyricArray.splice(index, 1)
       this.$emit('update')
     },
-    insert(index) {
-      this.runner.lrc.lyrics.splice(index+1, 0, {
+    insert (index) {
+      this.runner.lrc.lyrics.splice(index + 1, 0, {
         timestamp: this.runner.lrc.lyrics[index].timestamp,
         content: this.runner.lrc.lyrics[index].content,
       })
       this.$emit('update')
     },
-    insertText(index) {
-      this.lyricArray.splice(index+1, 0, this.lyricArray[index])
+    insertText (index) {
+      this.lyricArray.splice(index + 1, 0, this.lyricArray[index])
       this.$emit('update')
     },
-    removeTimestamp(index) {
+    removeTimestamp (index) {
       var lyrics = this.runner.lrc.lyrics
       var removeLyrics = lyrics
       .splice(index, lyrics.length - index)
@@ -253,14 +253,14 @@ export default {
       this.lyricArray.splice(0, 0, ...removeLyrics)
       this.$emit('update')
     },
-    setTimestamp(index) {
+    setTimestamp (index) {
       var currentTime = this.$parent.$refs.player.currentTime
       if (currentTime !== 0) {
         this.runner.lrc.lyrics[index].timestamp = currentTime
         this.$emit('update')
       }
     },
-    setTimestampText(index) {
+    setTimestampText (index) {
       var currentTime = this.$parent.$refs.player.currentTime
       if (currentTime !== 0 && this.lyricArray.length) {
         this.runner.lrc.lyrics.push({
@@ -271,7 +271,7 @@ export default {
         this.$emit('update')
       }
     },
-    scrollToCurrentLyric(force=false) {
+    scrollToCurrentLyric (force = false) {
       var root = this.$el
       var cur = root.querySelector('.cur')
       if (cur) {
@@ -284,7 +284,7 @@ export default {
   filters: {
     time: timestamp2timestr,
   },
-  created() {
+  created () {
     this.$on('timeupdate', (timestamp) => {
       this.runner.timeUpdate(timestamp)
       this.index = this.runner.curIndex()
@@ -299,7 +299,7 @@ export default {
       this.setTimestampText(0)
     })
   },
-  mounted() {
+  mounted () {
     this.scroller = new Scroller(this.$el)
 
     globalKeydown
@@ -323,8 +323,8 @@ export default {
     })
   },
   watch: {
-    editing() {
-      if (! this.editing) {
+    editing () {
+      if (!this.editing) {
         this.exitEdit()
       }
     },

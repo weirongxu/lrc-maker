@@ -8,7 +8,7 @@ import clone from 'clone'
 export var isMobile = ('ontouchstart' in window)
 
 export class EventEmitter extends EventEmitter2 {
-  on(events, ...args) {
+  on (events, ...args) {
     if (is.array(events)) {
       events.forEach((it) => {
         super.on(it, ...args)
@@ -24,45 +24,45 @@ export class Scroller {
   timer = []
   scrollableStartTime = new Date()
 
-  constructor(viewport, config={}) {
+  constructor (viewport, config = {}) {
     this.viewport = viewport
-    this.config = extend({delay: 3, time:1, step: 100}, config)
+    this.config = extend({delay: 3, time: 1, step: 100}, config)
 
     this.viewport.addEventListener('scroll', () => {
-      if (! this.isCanScroll()) {
+      if (!this.isCanScroll()) {
         this.letDelay()
       }
     })
   }
 
-  letDelay() {
+  letDelay () {
     this.scrollableStartTime = Date.now() + this.config.delay * 1000
   }
 
-  clearTimer() {
+  clearTimer () {
     this.timer.forEach((it) => clearTimeout(it))
     this.timer = []
   }
 
-  isCanScroll() {
+  isCanScroll () {
     return Date.now() > this.scrollableStartTime
   }
 
-  scrollTo(targetTop, force=false) {
-    if (! this.isCanScroll() && force === false)
-      return
+  scrollTo (targetTop, force = false) {
+    if (!this.isCanScroll() && force === false) { return }
     this.clearTimer()
 
     var startTop = this.viewport.scrollTop
     var endTop = targetTop
     var diffTop = endTop - startTop
-    if (diffTop === 0)
+    if (diffTop === 0) {
       return
+    }
 
     var perStep = diffTop / this.config.step
 
     var curTop = startTop
-    for (var i=1; i < this.config.step; ++i) {
+    for (var i = 1; i < this.config.step; ++i) {
       ((i) => {
         this.timer.push(setTimeout(() => {
           if (curTop !== this.viewport.scrollTop) {
@@ -84,7 +84,7 @@ export class DelayHover extends EventEmitter {
   leaveTimer = null
   show = false
 
-  constructor(element, config={}) {
+  constructor (element, config = {}) {
     super()
     this.element = element
     this.cfg = extend({
@@ -126,30 +126,30 @@ export class DelayHover extends EventEmitter {
     }
   }
 
-  closeLastHover() {
-    if (this.cfg.unique
-        && DelayHover.LastHover
-        && DelayHover.LastHover != this
+  closeLastHover () {
+    if (this.cfg.unique &&
+        DelayHover.LastHover &&
+        DelayHover.LastHover !== this
        ) {
       DelayHover.LastHover.emit('leave')
     }
   }
 
-  clearLeaveTimer() {
+  clearLeaveTimer () {
     if (this.leaveTimer !== null) {
       clearTimeout(this.leaveTimer)
       this.leaveTimer = null
     }
   }
 
-  clearEnterTimer() {
+  clearEnterTimer () {
     if (this.enterTimer !== null) {
       clearTimeout(this.enterTimer)
       this.enterTimer = null
     }
   }
 
-  hover(enter, leave) {
+  hover (enter, leave) {
     this
     .on('enter', enter)
     .on('leave', leave)
@@ -158,12 +158,12 @@ export class DelayHover extends EventEmitter {
 
 var isFileSaverSupported
 try {
-  isFileSaverSupported = !!new Blob
+  isFileSaverSupported = !!new Blob()
 } catch (e) {
   isFileSaverSupported = false
 }
 
-export function saveLrc(str, name) {
+export function saveLrc (str, name) {
   if (isFileSaverSupported) {
     FileSaver.saveAs(
       new Blob([str], {type: 'text/plain;charset=utf-8'}),
@@ -177,11 +177,11 @@ export function saveLrc(str, name) {
 export class Cache {
   version = 2
 
-  constructor(prefix = 'lrc') {
+  constructor (prefix = 'lrc') {
     this.prefix = prefix
   }
 
-  read() {
+  read () {
     var data
     if (this.prefix in localStorage) {
       try {
@@ -196,22 +196,22 @@ export class Cache {
     return {}
   }
 
-  write(data) {
+  write (data) {
     data.$version = this.version
     localStorage[this.prefix] = JSON.stringify(data)
   }
 
-  get(key, defaultValue) {
+  get (key, defaultValue) {
     var data = this.read()
     return (key in data) ? data[key] : defaultValue
   }
 
-  set(key, value) {
+  set (key, value) {
     var data = this.read()
     data[key] = value
     try {
       this.write(data)
-    } catch(e) {
+    } catch (e) {
       console.error(e)
     }
   }
@@ -238,34 +238,33 @@ window.addEventListener('keydown', (event) => {
   }
 })
 
-
 export class Dragger extends Unidragger {
-  constructor(elem, container) {
+  constructor (elem, container) {
     super(elem)
     this.ee = new EventEmitter()
     this.element = elem
     this.container = container
   }
 
-  on(...args) {
+  on (...args) {
     return this.ee.on(...args)
   }
 
-  emit(...args) {
+  emit (...args) {
     return this.ee.emit(...args)
   }
 
-  create() {
+  create () {
     this.handles = [ this.element ]
     this.bindHandles()
   }
 
-  dragStart(event) {
+  dragStart (event) {
     this.dragStartPoint.left = this.element.offsetLeft
     this.emit('start', event)
   }
 
-  dragMove(event, pointer, moveVector) {
+  dragMove (event, pointer, moveVector) {
     this.offset = this.dragStartPoint.left + moveVector.x
     if (this.offset < 0) {
       this.offset = 0
@@ -275,27 +274,28 @@ export class Dragger extends Unidragger {
     this.emit('move', event, pointer, moveVector)
   }
 
-  dragEnd(event, pointer) {
+  dragEnd (event, pointer) {
     this.emit('end', event, pointer)
   }
 }
 
-export function timestamp2timestr(time, onlyInteger=false) {
-  if (! time)
+export function timestamp2timestr (time, onlyInteger = false) {
+  if (!time) {
     time = 0
-  var padZero = (num, size=2) => {
+  }
+  var padZero = (num, size = 2) => {
     num = num.toString()
     while (num.split('.')[0].length < size) num = '0' + num
     return num
   }
   if (onlyInteger) {
-    return `${padZero(parseInt(time/60, 10))}:${padZero(parseInt(time%60, 10))}`
+    return `${padZero(parseInt(time / 60, 10))}:${padZero(parseInt(time % 60, 10))}`
   } else {
-    return `${padZero(parseInt(time/60, 10))}:${padZero((time%60).toFixed(2), 2)}`
+    return `${padZero(parseInt(time / 60, 10))}:${padZero((time % 60).toFixed(2), 2)}`
   }
 }
 
-export function timestr2timestamp(str) {
+export function timestr2timestamp (str) {
   var [minute, second] = str.split(':')
   return parseInt(minute, 10) * 60 + parseFloat(second)
 }
@@ -308,27 +308,27 @@ export class TooltipPosition {
     'left',
   ]
 
-  constructor(target, tooltip, dir='bottom') {
+  constructor (target, tooltip, dir = 'bottom') {
     this.target = target
     this.tooltip = tooltip
     this.viewport = document.documentElement
     this.generateDirs(dir)
   }
 
-  generateDirs(dir) {
+  generateDirs (dir) {
     var idx = this.dirs.indexOf(dir)
     this.dirs.splice(idx, 1)
     this.dirs.unshift(dir)
   }
 
-  checkRectOverflow(rect) {
-    return rect.left >= 0
-      && rect.top >= 0
-      && rect.right <= this.viewport.clientWidth
-      && rect.bottom <= this.viewport.clientHeight
+  checkRectOverflow (rect) {
+    return rect.left >= 0 &&
+      rect.top >= 0 &&
+      rect.right <= this.viewport.clientWidth &&
+      rect.bottom <= this.viewport.clientHeight
   }
 
-  rectOverflowCount(rect) {
+  rectOverflowCount (rect) {
     var negative = (val) => val < 0 ? val : 0
     return negative(rect.left) +
       negative(rect.top) +
@@ -336,7 +336,7 @@ export class TooltipPosition {
       negative(this.viewport.clientHeight - rect.bottom)
   }
 
-  position() {
+  position () {
     var rect = this.target.getBoundingClientRect()
     var width = this.tooltip.clientWidth
     var height = this.tooltip.clientHeight
@@ -348,33 +348,33 @@ export class TooltipPosition {
 
     var overflowValues = []
 
-    for (var i=0; i < this.dirs.length; ++i) {
+    for (var i = 0; i < this.dirs.length; ++i) {
       var dir = this.dirs[i]
-      switch(this.dirs[i]) {
-      case 'bottom':
-        tooltipRect.left = rect.left + rect.width/2 - width/2
-        tooltipRect.right = tooltipRect.left + width
-        tooltipRect.top = rect.bottom
-        tooltipRect.bottom = rect.bottom + height
-        break
-      case 'top':
-        tooltipRect.left = rect.left + rect.width/2 - width/2
-        tooltipRect.right = tooltipRect.left + width
-        tooltipRect.top = rect.top - height
-        tooltipRect.bottom = rect.top
-        break
-      case 'left':
-        tooltipRect.left = rect.left - width
-        tooltipRect.right = rect.left
-        tooltipRect.top = rect.top + rect.height/2 - height/2
-        tooltipRect.bottom = tooltipRect.top + height
-        break
-      case 'right':
-        tooltipRect.left = rect.right
-        tooltipRect.right = rect.right + width
-        tooltipRect.top = rect.top + rect.height/2 - height/2
-        tooltipRect.bottom = tooltipRect.top + height
-        break
+      switch (this.dirs[i]) {
+        case 'bottom':
+          tooltipRect.left = rect.left + rect.width / 2 - width / 2
+          tooltipRect.right = tooltipRect.left + width
+          tooltipRect.top = rect.bottom
+          tooltipRect.bottom = rect.bottom + height
+          break
+        case 'top':
+          tooltipRect.left = rect.left + rect.width / 2 - width / 2
+          tooltipRect.right = tooltipRect.left + width
+          tooltipRect.top = rect.top - height
+          tooltipRect.bottom = rect.top
+          break
+        case 'left':
+          tooltipRect.left = rect.left - width
+          tooltipRect.right = rect.left
+          tooltipRect.top = rect.top + rect.height / 2 - height / 2
+          tooltipRect.bottom = tooltipRect.top + height
+          break
+        case 'right':
+          tooltipRect.left = rect.right
+          tooltipRect.right = rect.right + width
+          tooltipRect.top = rect.top + rect.height / 2 - height / 2
+          tooltipRect.bottom = tooltipRect.top + height
+          break
       }
 
       overflowValues.push([this.rectOverflowCount(tooltipRect), dir, clone(tooltipRect)])

@@ -45,7 +45,7 @@
   import PKG from '../../../package.json'
 
   export default {
-    data() {
+    data () {
       return {
         PKG: PKG,
         title: this.$t('modal.help.title'),

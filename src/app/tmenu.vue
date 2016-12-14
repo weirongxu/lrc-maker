@@ -51,7 +51,7 @@ span {
 import Tooltip from './tooltip'
 
 export default {
-  data() {
+  data () {
     return {
       dir: false,
     }

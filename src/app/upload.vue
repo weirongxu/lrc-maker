@@ -14,7 +14,7 @@ input[type="file"] {
 
 <script>
 export default {
-  mounted: function() {
+  mounted: function () {
     var upload = this.$refs.upload
     upload.addEventListener('change', () => {
       var reader = new FileReader()
@@ -40,10 +40,10 @@ export default {
     },
   },
   methods: {
-    upload() {
+    upload () {
       this.$refs.upload.click()
     },
-    type_match() {
+    type_match () {
       if (this.type) {
         var match = new RegExp(`^${this.type}/`)
         return match.test(this.$refs.upload.files[0].type)

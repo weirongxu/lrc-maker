@@ -11,25 +11,25 @@
   import cache from '../../cache'
 
   export default {
-    data() {
+    data () {
       return {
         title: this.$t('modal.lyric_upload.title'),
         lyric: cache.lyric,
         confirm: true,
       }
     },
-    created() {
+    created () {
       this.$on('ok', () => {
         this.$App.lyricArray = this.lyric.split(/\r\n|[\n\r]/g)
       })
     },
     methods: {
-      upload(lyric) {
+      upload (lyric) {
         this.lyric = lyric
       },
     },
     watch: {
-      lyric(val) {
+      lyric (val) {
         cache.lyric = val
       },
     },

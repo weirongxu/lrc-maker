@@ -193,7 +193,7 @@ header, footer {
   import cache from '../cache'
 
   export default {
-    data() {
+    data () {
       var lrcFormat = cache.lrcFormat
 
       return {
@@ -206,33 +206,33 @@ header, footer {
       }
     },
     methods: {
-      uploadMusic(music) {
+      uploadMusic (music) {
         // cache.music = music
         this.$refs.player.src = music
       },
-      removeLyric() {
+      removeLyric () {
         this.lrcFormat = ''
         this.lyricArray = []
         this.runner = new Runner()
       },
-      playto(time) {
+      playto (time) {
         this.$refs.player.playto(time)
       },
-      timeupdate(timestamp) {
+      timeupdate (timestamp) {
         this.$refs.lyric.$emit('timeupdate', timestamp)
       },
     },
     watch: {
-      editing(val) {
+      editing (val) {
         cache.editing = val
       },
-      lrcFormat(val) {
+      lrcFormat (val) {
         cache.lrcFormat = val
         this.runner = new Runner(Lrc.parse(this.lrcFormat))
       },
       lyricArray: {
         deep: true,
-        handler() {
+        handler () {
           cache.lyricArray = this.lyricArray
         },
       },

@@ -49,7 +49,7 @@
 import {DelayHover} from '../utils'
 
 export default {
-  data() {
+  data () {
     return {
       dir: false,
       style: {
@@ -69,7 +69,7 @@ export default {
       default: 0.5,
     },
   },
-  mounted() {
+  mounted () {
     var menu = this.$refs.menu
     var dhover = new DelayHover(menu, {
       enterDelay: this.enterDelay,

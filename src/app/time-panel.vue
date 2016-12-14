@@ -20,7 +20,7 @@ import {timestamp2timestr} from '../utils'
 import cache from '../cache'
 
 export default {
-  data() {
+  data () {
     return {
       remain: cache.timeRemain,
     }
@@ -36,12 +36,12 @@ export default {
     },
   },
   filters: {
-    time(timestamp) {
+    time (timestamp) {
       return timestamp2timestr(timestamp, true)
     },
   },
   watch: {
-    remain(val) {
+    remain (val) {
       cache.timeRemain = val
     },
   },

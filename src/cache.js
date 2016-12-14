@@ -24,7 +24,7 @@ Object.keys(cacheMap).forEach((prop) => {
 })
 
 export default new Proxy(cacheObj, {
-  set: function(obj, prop, value) {
+  set: function (obj, prop, value) {
     let config = cacheMap[prop]
     cache.set(config.name || prop, value)
     obj[prop] = value

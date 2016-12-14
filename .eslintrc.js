@@ -2,45 +2,29 @@ module.exports = {
   root: true,
   parser: 'babel-eslint',
   parserOptions: {
-    sourceType: 'module',
+    sourceType: 'module'
   },
+  // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
+  extends: 'standard',
+  // required to lint *.vue files
   plugins: [
     'html'
   ],
-  "rules": {
-    "strict": 0,
-    "indent": [
-      2,
-      2
-    ],
-    "quotes": [
-      2,
-      "single"
-    ],
-    "linebreak-style": [
-      2,
-      "unix"
-    ],
-    "semi": [
-      2,
-      "never"
-    ],
-    "comma-dangle": [
-      2,
-      'only-multiline'
-    ],
-    "no-console": [
-      1,
-      { allow: ["warn", "error"] }
-    ],
-    "no-unused-vars": [
-      1
-    ]
+  env: {
+    es6: true,
+    browser: true,
+    node: true,
   },
-  "env": {
-    "es6": true,
-    "node": true,
-    "browser": true
-  },
-  "extends": "eslint:recommended"
+  // add your custom rules here
+  'rules': {
+    // allow paren-less arrow functions
+    'arrow-parens': 0,
+    // allow async-await
+    'generator-star-spacing': 0,
+    // allow debugger during development
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    'comma-dangle': ['error', 'only-multiline'],
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
+    'no-unused-vars': ['warn'],
+  }
 }
