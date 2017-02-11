@@ -134,8 +134,8 @@ export default {
       if (this.paused) {
         this.paused = false
       }
-      // Maybe not understand why here use `nextTick`
-      // This's bug of chrome, dataURL music will overlap play when change currentTime before call `audio.play()`
+      // Using `nextTick`
+      // A bug on chrome, dataURL music will overlap play when change currentTime before call `audio.play()`
       this.$nextTick(() => {
         this.currentTime = this.audio.currentTime = time
       })

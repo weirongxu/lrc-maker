@@ -226,16 +226,10 @@ window.addEventListener('keydown', (event) => {
   ) return
 
   var code = event.code.toLowerCase()
-  var results = globalKeydown.listeners(code).map((fn) => {
-    return fn(event) === false
-  })
-  if (results.length) {
-    var hasFalse = false
-    results.forEach((it) => {
-      if (it) hasFalse = true
-    })
-    if (hasFalse) event.preventDefault()
-  }
+  var results = globalKeydown.listeners(code)
+    .map((fn) => fn(event))
+    .some((flag) => flag === false)
+  if (hasFalse) event.preventDefault()
 })
 
 export class Dragger extends Unidragger {
