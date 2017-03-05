@@ -98,10 +98,12 @@
 </template>
 
 <style lang="sass" scoped>
+@import 'sass/base';
+
 ul.lyrics {
   $dark-color: #f1f1f1;
   $light-color: #fbfbfb;
-  $face-color: #044d98;
+  $face-color: $blue-color;
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -109,10 +111,10 @@ ul.lyrics {
   > li {
     min-height: 40px;
     text-align: center;
-    color: #044d98;
+    color: $face-color;
     padding: 10px 0;
     &.cur {
-      color: #044d98;
+      color: $face-color;
       text-shadow: 1px 1px 1px #aaa;
       background-color: $light-color;
     }
