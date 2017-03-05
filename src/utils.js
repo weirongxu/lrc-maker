@@ -4,6 +4,7 @@ import Unidragger from 'unidragger'
 import is from 'is_js'
 import extend from 'extend'
 import clone from 'clone'
+import PKG from '../package.json'
 
 export var isMobile = ('ontouchstart' in window)
 
@@ -177,7 +178,7 @@ export function saveLrc (str, name) {
 export class Cache {
   version = 2
 
-  constructor (prefix = 'lrc') {
+  constructor (prefix = PKG.name) {
     this.prefix = prefix
   }
 
@@ -225,8 +226,8 @@ window.addEventListener('keydown', (event) => {
     event.target.tagName.toLowerCase())
   ) return
 
-  var code = event.code.toLowerCase()
-  var results = globalKeydown.listeners(code)
+  var code = event.key || event.code
+  var hasFalse = globalKeydown.listeners(code.toLowerCase())
     .map((fn) => fn(event))
     .some((flag) => flag === false)
   if (hasFalse) event.preventDefault()

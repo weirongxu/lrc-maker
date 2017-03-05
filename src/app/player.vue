@@ -159,7 +159,7 @@ export default {
       this.paused = true
     })
     globalKeydown
-    .on('space', () => {
+    .on(['space', ' '], () => {
       this.paused = !this.paused
       return false
     })
