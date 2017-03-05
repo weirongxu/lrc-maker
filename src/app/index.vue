@@ -14,7 +14,7 @@
               <i class="icon-upload"></i> {{ $t('menu.upload.lyric') }}
             </li>
             <li>
-              <upload accept="audio/*" read-format="DataURL" @uploaded="uploadMusic">{{ $t('menu.upload.music')}}</upload>
+              <upload accept="audio/*" read-format="url" @upload="uploadMusic">{{ $t('menu.upload.music')}}</upload>
             </li>
           </ul>
         </nav-menu>

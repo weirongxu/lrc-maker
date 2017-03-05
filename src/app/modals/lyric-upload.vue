@@ -2,7 +2,7 @@
   <div>
     <p>{{ $t('modal.lyric_upload.description') }}</p>
     <textarea v-model="lyric"></textarea>
-    <upload class="btn" @uploaded="upload">{{ $t('modal.lyric_upload.upload') }}</upload>
+    <upload class="btn" @upload="upload">{{ $t('modal.lyric_upload.upload') }}</upload>
   </div>
 </template>
 

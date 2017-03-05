@@ -17,12 +17,16 @@ export default {
   mounted: function () {
     var upload = this.$refs.upload
     upload.addEventListener('change', () => {
-      var reader = new FileReader()
-      reader.onload = (event) => {
-        this.$emit('uploaded', event.target.result)
-      }
       if (upload.files.length > 0 && this.type_match()) {
-        reader['readAs' + this.readFormat](upload.files[0])
+        if (this.readFormat === 'url') {
+          this.$emit('upload', URL.createObjectURL(upload.files[0]))
+        } else {
+          var reader = new FileReader()
+          reader.onload = (event) => {
+            this.$emit('upload', event.target.result)
+          }
+          reader['readAs' + this.readFormat](upload.files[0])
+        }
       }
     })
   },
